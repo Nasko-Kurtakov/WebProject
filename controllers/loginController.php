@@ -23,10 +23,20 @@ function createUser(string $username,string $password){
     $conn = $db->getConn();
     // make query to find user type here and create user based on user type;
     // for now mock up creates only a admin/teacher user
-    $loggedInUser = new Teacher($username,$password,"admin");
-    print_r($loggedInUser->toString());
+    if(/*usertype is teacher or student*/true){
+        createTeacher($username,$password);
+    }else{
+        createStudent($username,$password);
+    }
+}
+
+function createTeacher(string $username,string $password){
+    $loggedInUser = new Teacher("Стамат Георгиев",$username,"admin");
     $_SESSION["user"] = $loggedInUser->toString();
-    print_r($_SESSION);
+    header('Location: ../views/homePageTeacher.php');
+}
+
+function createStudent(string $username,string $password){
 
 }
 

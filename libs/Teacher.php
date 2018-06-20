@@ -30,4 +30,8 @@ class Teacher
         $arr["usertype"]=$this->usertype;
         return $arr;
     }
+
+    public function getNames(){
+        return $this->names;
+    }
 }

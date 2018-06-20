@@ -19,22 +19,25 @@
     <h1> Добре дошъл ...</h1>
 
 <div class="row">
-  <div class="column" style="background-color:#aaa;">
+  <div class="column">
       <div class="container">
           <h2>Създай</h2>
-          <p>Some text..</p>
+          <img src="../img/create.png"
+          <p></p>
       </div>
   </div>
-  <div class="column" style="background-color:#bbb;">
+  <div class="column">
       <div class="container">
           <h2>Оцени</h2>
-          <p>Some text..</p>
+          <img src="../img/evaluate.png"
+          <p></p>
       </div>
   </div>
-  <div class="column" style="background-color:#ccc;">
+  <div class="column">
       <div class="container">
           <h2>Прикачи</h2>
-          <p>Some text..</p>
+          <img src="../img/import.png"
+          <p></p>
       </div>
   </div>
 </div>

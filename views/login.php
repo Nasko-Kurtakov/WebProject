@@ -1,5 +1,6 @@
 <?php
-
+require_once "../libs/Init.php";
+Init::_init();
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,8 +14,8 @@
     <div class="login-page">
         <div class="form">
             <form method="POST" action="../controllers/loginController.php" class="login-form">
-                <input type="text" placeholder="username"/>
-                <input type="password" placeholder="password"/>
+                <input name="username" type="text" placeholder="Потребителско име"/>
+                <input name="password" type="password" placeholder="Парола"/>
                 <button type="submit">влез</button>
             </form>
         </div>

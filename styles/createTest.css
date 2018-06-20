@@ -1,0 +1,8 @@
+.empty-line-answer{
+    height: 20px;
+}
+
+.is-printing .hide-on-print{
+    /*display: none;*/
+    visibility: hidden;
+}

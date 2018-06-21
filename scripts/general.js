@@ -12,4 +12,49 @@
             });
         }
     };
+
+    function postJSONData(url, data) {
+        // Default options are marked with *
+        return fetch(url, {
+            body: JSON.stringify(data), // must match 'Content-Type' header
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
+        })
+        .then(function(res){
+           return res.json()
+        })
+        .catch(function(error){
+            console.error('Error:', error);
+            return;
+        })
+        .then(function(response){
+            console.log('Success:', response);
+            return;
+        });
+    }
+
+    function encodeData(data) {
+        var encoded = Object.keys(data).map(function(key) {
+            return [key, data[key]].map(encodeURIComponent).join("=");
+        }).join("&");
+
+        return !!encoded ? "?"+encoded : encoded;
+    }
+
+    function getJSONData(url,paramsObs){
+        var paramsAsString = encodeData(paramsObs);
+        var urlWithParams = url + paramsAsString;
+        return fetch(urlWithParams)
+            .then(function(response) {
+                return response.json();
+            });
+            // .then(function(myJson) {
+            //     console.log(myJson);
+            // });
+    }
+
+    window.postJSONData = postJSONData;
+    window.getJSONData = getJSONData;
 })();

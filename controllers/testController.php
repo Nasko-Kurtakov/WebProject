@@ -9,13 +9,10 @@
 require_once "../libs/Init.php";
 Init::_init(true);
 
-use libs\Test;
+use libs\TestTemplate;
 
 $postData = json_decode(file_get_contents("php://input"), true);
 
 $myJSON = json_encode($postData);
-
-
-
 
 echo $myJSON;

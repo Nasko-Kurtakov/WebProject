@@ -20,25 +20,19 @@
 
 <div class="row">
   <div class="column">
-      <div class="container">
           <h2>Създай</h2>
           <img src="../img/create.png"
           <p></p>
-      </div>
   </div>
   <div class="column">
-      <div class="container">
           <h2>Оцени</h2>
           <img src="../img/evaluate.png"
           <p></p>
-      </div>
   </div>
   <div class="column">
-      <div class="container">
           <h2>Прикачи</h2>
           <img src="../img/import.png"
           <p></p>
-      </div>
   </div>
 </div>
 </div>

@@ -27,30 +27,28 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
 </head>
 <body>
 <div class="view-container">
-    <h1> Добре дошъл <?php echo $teacher->getNames() ?></h1>
+    <div class="welcome"> Добре дошъл <span style="color:white"> <?php echo $teacher->getNames() ?></span> </div>
     <div class="row">
-        <div class="column">
+        <div class="column firstColumn">
             <a href="createTest.php">
-                <div class="container">
-                    <h2>Създай</h2>
-                    <img src="../img/create.png"
-                    <p></p>
-                </div>
+                <span class="columnName">Създай</span>
+                <img src="../img/create.png">
+                <span class="description"> Създай и разпечатай нов тест с отворени и затворени въпроси </span>
             </a>
         </div>
-        <div class="column">
-            <div class="container">
-                <h2>Оцени</h2>
-                <img src="../img/evaluate.png"
-                <p></p>
-            </div>
+        <div class="column secondColumn">
+            <a href="#">
+                <span class="columnName">Прикачи</span>
+                <img src="../img/import.png">
+                <span class="description"> Прикачи сканиран тест, по който да направиш шаблон за оценка</span>
+            </a>
         </div>
-        <div class="column">
-            <div class="container">
-                <h2>Прикачи</h2>
-                <img src="../img/import.png"
-                <p></p>
-            </div>
+        <div class="column thirdColumn">
+            <a href="#">
+                <span class="columnName">Оцени</span>
+                <img src="../img/evaluate.png">
+                <span class="description"> Оцени прикачените тестове по създадения вече шаблон за оценка</span>
+            </a>
         </div>
     </div>
 </div>

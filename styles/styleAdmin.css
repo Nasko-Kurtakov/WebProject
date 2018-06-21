@@ -1,6 +1,7 @@
 
 *{
     box-sizing: border-box;
+    font-family: "Bebas Neue", sans-serif;
 }
 
 /* Create three equal columns that floats next to each other */
@@ -8,9 +9,27 @@
     float: left;
     width: 30%;
     padding: 50px;
-    background-color: #a1cd61;
     margin: 0 15px;
 
+}
+
+.welcome{
+    color: #2d2d2d;
+    text-align: center;
+    font-size: 70px;
+    margin-bottom: -50px;
+    margin-top: 80px;
+}
+.firstColumn{
+    background-color: #019d6e;
+}
+
+.secondColumn{
+    background-color: #94335c;
+}
+
+.thirdColumn{
+    background-color: #f08d2f;
 }
 
 /* Clear floats after the columns */
@@ -25,11 +44,25 @@
 }
 
 body{
-    background-color: #f1f1f1;
+    background-color: #cecac1;
 }
 
-h1,h2{
-    text-align:center;
+.columnName{
+    color: #FFFFFF;
+    font-size: 40px;
+    display: block;
+    margin: 0px auto;
+    width: 100px;
+    padding: 20px;
+}
+
+.description{
+    color:#FFFFFF;
+    font-size: 25px;
+}
+
+a{
+    text-decoration: none;
 }
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
@@ -38,14 +71,6 @@ h1,h2{
     }
 }
 
-.container{
-    width: 100%;
-    padding: 20%;
-    background-color: #ffffff;
-    border-style: double;
-    border-width: 10px;
-    border-color: #2d2d2de8;
-}
 
 img{
     width:100%;

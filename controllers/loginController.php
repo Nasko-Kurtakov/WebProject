@@ -21,17 +21,21 @@ use libs\Db;
 function createUser(string $username,string $password){
     $db = new Db();
     $conn = $db->getConn();
-    // make query to find user type here and create user based on user type;
-    // for now mock up creates only a admin/teacher user
-    if(/*usertype is teacher or student*/true){
-        createTeacher($username,$password);
-    }else{
-        createStudent($username,$password);
+
+    $smth=$conn->prepare("SELECT * FROM `user` WHERE username = ? AND password = ?");
+    $result = $smth->execute([$username, $password]);
+    $user = $smth->fetch();
+
+    if($user["user_type"] == "student"){
+        createStudent($user["name"],$user["username"],$user["user_type"]);
+    }
+    if($user["user_type"] == "admin"){
+        createTeacher($user["name"],$user["username"],$user["user_type"]);
     }
 }
 
-function createTeacher(string $username,string $password){
-    $loggedInUser = new Teacher("Стамат Георгиев",$username,"admin");
+function createTeacher(string $names, string $username,string $userType){
+    $loggedInUser = new Teacher($names,$username,$userType);
     $_SESSION["user"] = $loggedInUser->toString();
     header('Location: ../views/homePageTeacher.php');
 }

@@ -6,3 +6,7 @@
     /*display: none;*/
     visibility: hidden;
 }
+
+*{
+    font-size: 20px;
+}

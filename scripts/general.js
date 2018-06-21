@@ -12,4 +12,29 @@
             });
         }
     };
+
+    function postJSONData(url, data) {
+        // Default options are marked with *
+        return fetch(url, {
+            body: JSON.stringify(data), // must match 'Content-Type' header
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
+        })
+        .then(function(res){
+           return res.json()
+        })
+        .catch(function(error){
+            console.error('Error:', error);
+            return;
+        })
+        .then(function(response){
+            console.log('Success:', response);
+            return;
+        });
+    }
+
+    window.postJSONData = postJSONData;
+
 })();

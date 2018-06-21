@@ -30,9 +30,16 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     <h1> Добре дошъл <?php echo $teacher->getNames() ?></h1>
     <div class="row">
         <div class="column">
-            <a href="createTest.php">
+<!--            <a href="createTest.php">-->
+<!--                <div class="container">-->
+<!--                    <h2>Създай jei</h2>-->
+<!--                    <img src="../img/create.png"-->
+<!--                    <p></p>-->
+<!--                </div>-->
+<!--            </a>-->
+            <a href="createTemplate.php">
                 <div class="container">
-                    <h2>Създай</h2>
+                    <h2>Създай шаблон</h2>
                     <img src="../img/create.png"
                     <p></p>
                 </div>

@@ -1,0 +1,31 @@
+.view-container {
+    padding: 0 70px;
+}
+
+img{
+    width:100%;
+}
+body{
+    background-color: #f1f1f1;
+}
+
+.selection-canvas{
+    z-index:40;
+    width:0px;
+    height:0px;
+    position:absolute;
+}
+
+.test-holder{
+    position: relative;
+}
+.img-holder{
+    z-index: 30;
+}
+
+.legend{
+    position: absolute;
+    left: 50px;
+    top:50px;
+    z-index: 32;
+}

@@ -1,16 +1,25 @@
 (function () {
 
-    function postData(url, data) {
+    function postJSONData(url, data) {
         // Default options are marked with *
         return fetch(url, {
             body: JSON.stringify(data), // must match 'Content-Type' header
-            headers:{
+            headers: {
                 'Content-Type': 'application/json'
             },
             method: 'POST'
-        }).then(res => res.json())
-            // .catch(error => console.error('Error:', error))
-            .then(response => console.log('Success:', response));
+        })
+            .then(function (res) {
+                return res.json()
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+                return;
+            })
+            .then(function (response) {
+                console.log('Success:', response);
+                return;
+            });
     }
 
     var testVM = function () {
@@ -83,8 +92,9 @@
                           correctAnswers:function(){
                               var correctIndexes = [];
                               question.answers().forEach((a,i)=>{
-                                  if(a.isCorrect())
-                                      correctIndexes.push(i);
+                                  if(a.isCorrect()){
+                                  correctIndexes.push(i);
+                                }
                               });
                               return correctIndexes;
                           }()

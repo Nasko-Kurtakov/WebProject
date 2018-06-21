@@ -46,11 +46,13 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
             </a>
         </div>
         <div class="column">
-            <div class="container">
-                <h2>Оцени</h2>
-                <img src="../img/evaluate.png"
-                <p></p>
-            </div>
+            <a href="scoreTest.php">
+                <div class="container">
+                    <h2>Оцени</h2>
+                    <img src="../img/evaluate.png"
+                    <p></p>
+                </div>
+            </a>
         </div>
         <div class="column">
             <div class="container">

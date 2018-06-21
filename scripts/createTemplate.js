@@ -8,6 +8,7 @@
             var groupRect = null;
 
             var $selectionCanvas = $("#selection-canvas");
+            var $markingCanvas = $("#marking-canvas");
 
             var selectionEndHandler = function (e) {
                 if(!isDragging) return;
@@ -109,6 +110,17 @@
                 width: $(element).width(),
                 height: $(element).height()
             });
+            $markingCanvas.attr({
+                width: $(element).width(),
+                height: $(element).height()
+            });
+            $markingCanvas.css({
+                top: 0,
+                left: 0,
+                display: "block",
+                width: $(element).width(),
+                height: $(element).height()
+            });
 
             $selectionCanvas.on("mousedown", selectionHandler);
             $selectionCanvas.on('mousemove', selectionDragHandler);
@@ -123,8 +135,8 @@
     var testTemplate = function () {
         var self = this;
 
-        var areasToShow=[];
-        var areasToHide=[];
+        var areasToShow=ko.observableArray([]);
+        var areasToHide=ko.observableArray([]);
         //mode - selection for hiding and selection for showing
         self.addArea=function (newArea,mode) {
             if(mode == "hide"){
@@ -137,13 +149,65 @@
 
         self.saveAreas=function () {
             let data = {
-                hidden:areasToHide,
-                show:areasToShow
+                name:"testTemp",
+                testId:420,
+                hidden:areasToHide(),
+                visible:areasToShow()
             };
             postJSONData("../controllers/templateController.php",data)
                 // .then()
         }
+
+        self.subscribeToShowAreas = function (handler) {
+            areasToShow.subscribe(handler,null,"arrayChange");
+        }
+
+        self.subscribeToHideAreas = function (handler) {
+            areasToHide.subscribe(handler,null,"arrayChange");
+        }
     };
 
-    ko.applyBindings(new testTemplate());
+    var testTemplateVM = new testTemplate();
+
+    testTemplateVM.subscribeToShowAreas(function (changes) {
+        changes.forEach((change)=>{
+            if(change.status=="added"){
+                var rect = change.value;
+                var canvas = document.getElementById("marking-canvas");
+                var ctx = canvas.getContext('2d');
+                ctx.beginPath();
+                ctx.lineWidth="6";
+                ctx.fillStyle="#f2ff0073";
+                //ctx.clearRect(0, 0, $selectionCanvas.width, $selectionCanvas.height); //clear canvas
+                // ctx.beginPath();
+                //ctx.setLineDash([10, 10]);
+                ctx.fillRect(rect.left, rect.top, rect.width, rect.height);
+                // ctx.strokeStyle = 'black';
+                // ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+        });
+    });
+
+    testTemplateVM.subscribeToHideAreas(function (changes) {
+        changes.forEach((change)=>{
+            if(change.status=="added"){
+                var rect = change.value;
+                var canvas = document.getElementById("marking-canvas");
+                var ctx = canvas.getContext('2d');
+                ctx.beginPath();
+                ctx.lineWidth="6";
+                ctx.fillStyle="#000000";
+                //ctx.clearRect(0, 0, $selectionCanvas.width, $selectionCanvas.height); //clear canvas
+                // ctx.beginPath();
+                //ctx.setLineDash([10, 10]);
+                ctx.fillRect(rect.left, rect.top, rect.width, rect.height);
+                // ctx.strokeStyle = 'black';
+                // ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+        });
+    });
+
+    ko.applyBindings(testTemplateVM);
 })();

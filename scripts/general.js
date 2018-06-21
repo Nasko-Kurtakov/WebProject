@@ -35,6 +35,26 @@
         });
     }
 
-    window.postJSONData = postJSONData;
+    function encodeData(data) {
+        var encoded = Object.keys(data).map(function(key) {
+            return [key, data[key]].map(encodeURIComponent).join("=");
+        }).join("&");
 
+        return !!encoded ? "?"+encoded : encoded;
+    }
+
+    function getJSONData(url,paramsObs){
+        var paramsAsString = encodeData(paramsObs);
+        var urlWithParams = url + paramsAsString;
+        return fetch(urlWithParams)
+            .then(function(response) {
+                return response.json();
+            });
+            // .then(function(myJson) {
+            //     console.log(myJson);
+            // });
+    }
+
+    window.postJSONData = postJSONData;
+    window.getJSONData = getJSONData;
 })();

@@ -19,6 +19,7 @@
 <div>
     <span>Ctrl+drag - select to hide </span>
     <span>drag - select to show</span>
+    <span><label>Брой въпроси:<input type="text" data-bind="value: $data.numOfQuestions"></label></span>
     <button class="save-areas" data-bind="click:$data.saveAreas">Запазване на селекцията</button>
 </div>
 <div class="controlls"></div>

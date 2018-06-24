@@ -1,7 +1,6 @@
 (function () {
 
     function postJSONData(url, data) {
-        // Default options are marked with *
         return fetch(url, {
             body: JSON.stringify(data), // must match 'Content-Type' header
             headers: {
@@ -91,7 +90,7 @@
                           }),
                           correctAnswers:function(){
                               var correctIndexes = [];
-                              question.answers().forEach((a,i)=>{
+                              question.answers().forEach(function(a,i){
                                   if(a.isCorrect()){
                                   correctIndexes.push(i);
                                 }

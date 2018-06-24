@@ -12,6 +12,10 @@ Init::_init(true);
 use libs\Db;
 
 $postData = json_decode(file_get_contents("php://input"), true);
+//print_r($postData);
+
+//print_r((serialize($postData["hidden"])));
+
 $conn = (new Db())->getConn();
 
 
@@ -33,17 +37,24 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
 
     $postData["testId"] = rand(1, 10000);
 
-    $stmnt = $conn->prepare("INSERT INTO template (testId, hidden, visible, name) VALUES (?, ?, ?, ?)");
-    $stmnt->execute([$postData["testId"], serialize($postData["hidden"]), serialize($postData["visible"]), $postData["name"]]);
+    $stmnt = $conn->prepare("INSERT INTO template (hidden, visible, name, question_num) VALUES (?, ?, ?, ?)");
+    $stmnt->execute([serialize($postData["hidden"]), serialize($postData["visible"]), $postData["name"],$postData["numOfQuestions"]]);
 }
 
 if($_SERVER["REQUEST_METHOD"]=="GET"){
-    $stmnt=$conn->prepare("SELECT * FROM `template` WHERE ");
+    $params = array();
+    parse_str($_SERVER['QUERY_STRING'], $params);
+    if(isset($params["id"])) {
+        $stmnt = $conn->prepare("SELECT * FROM `template` WHERE id = ?");
+        $result = $stmnt->execute([$params["id"]]);
+        $template = $stmnt->fetch();
+        $template["hidden"] = unserialize($template["hidden"]);
+        $template["visible"] = unserialize($template["visible"]);
+        echo json_encode($template);
+    }else{
+        $stmnt = $conn->prepare("SELECT * FROM `template`");
+        $result = $stmnt->execute();
+        $template = $stmnt->fetchAll();
+        echo json_encode($template);
+    }
 }
-
-
-//print_r($postData);
-
-//$myJSON = json_encode($postData);
-
-//echo $myJSON;

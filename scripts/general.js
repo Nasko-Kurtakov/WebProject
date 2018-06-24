@@ -22,17 +22,17 @@
             },
             method: 'POST'
         })
-        .then(function(res){
-           return res.json()
-        })
+        // .then(function(res){
+        //    return res.json()
+        // })
         .catch(function(error){
             console.error('Error:', error);
             return;
         })
-        .then(function(response){
-            console.log('Success:', response);
-            return;
-        });
+        // .then(function(response){
+        //     console.log('Success:', response);
+        //     return;
+        // });
     }
 
     function encodeData(data) {
@@ -44,15 +44,15 @@
     }
 
     function getJSONData(url,paramsObs){
-        var paramsAsString = encodeData(paramsObs);
+        var paramsAsString = encodeData(paramsObs||{});
         var urlWithParams = url + paramsAsString;
         return fetch(urlWithParams)
             .then(function(response) {
                 return response.json();
+            })
+            .then(function(myJson) {
+                return myJson;
             });
-            // .then(function(myJson) {
-            //     console.log(myJson);
-            // });
     }
 
     window.postJSONData = postJSONData;

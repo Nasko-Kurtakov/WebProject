@@ -148,23 +148,26 @@
         };
 
         self.saveAreas=function () {
-            let data = {
+            var data = {
                 name:"testTemp",
                 testId:420,
                 hidden:areasToHide(),
-                visible:areasToShow()
+                visible:areasToShow(),
+                numOfQuestions:self.numOfQuestions()
             };
             postJSONData("../controllers/templateController.php",data)
                 // .then()
-        }
+        };
 
         self.subscribeToShowAreas = function (handler) {
             areasToShow.subscribe(handler,null,"arrayChange");
-        }
+        };
 
         self.subscribeToHideAreas = function (handler) {
             areasToHide.subscribe(handler,null,"arrayChange");
         }
+
+        self.numOfQuestions = ko.observable("");
     };
 
     var testTemplateVM = new testTemplate();

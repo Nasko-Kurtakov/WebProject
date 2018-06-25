@@ -1,0 +1,23 @@
+.column{
+    float: left;
+}
+.left{
+    width: 50%;
+
+}
+.left-container {
+    background-color: #019d6e;
+    margin-left: 150px;
+    margin-top: 150px;
+    margin-right: 20px;
+}
+
+.right{
+    width: 50%;
+}
+.right-container{
+    background-color: #94335c;
+    margin-right: 150px;
+    margin-top: 150px;
+    margin-left: 20px;
+}

@@ -15,7 +15,6 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     $user = $_SESSION["user"];
     $teacher = new Teacher($user["names"], $user["username"], $user["usertype"]);
 }
-
 ?>
 
 <!DOCTYPE html>

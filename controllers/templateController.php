@@ -35,8 +35,6 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
 //    return $this->id;
     }
 
-    $postData["testId"] = rand(1, 10000);
-
     $stmnt = $conn->prepare("INSERT INTO template (hidden, visible, name, question_num) VALUES (?, ?, ?, ?)");
     $stmnt->execute([serialize($postData["hidden"]), serialize($postData["visible"]), $postData["name"],$postData["numOfQuestions"]]);
 }

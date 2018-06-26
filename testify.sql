@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 19, 2018 at 11:27 PM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.0.28
+-- Host: localhost
+-- Generation Time: Jun 26, 2018 at 09:51 AM
+-- Server version: 10.1.30-MariaDB
+-- PHP Version: 7.2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -52,13 +52,37 @@ CREATE TABLE `questions` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `template`
+--
+
+CREATE TABLE `template` (
+  `id` int(11) NOT NULL,
+  `hidden` text,
+  `visible` text,
+  `name` varchar(20) NOT NULL,
+  `question_num` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `template`
+--
+
+INSERT INTO `template` (`id`, `hidden`, `visible`, `name`, `question_num`) VALUES
+(1, 'a:1:{i:0;a:4:{s:3:\"top\";i:475;s:4:\"left\";i:327;s:5:\"width\";i:1144;s:6:\"height\";i:216;}}', 'a:1:{i:0;a:4:{s:3:\"top\";i:168;s:4:\"left\";i:178;s:5:\"width\";i:1374;s:6:\"height\";i:222;}}', 'testTemp', 7),
+(4, 'a:1:{i:0;a:4:{s:3:\"top\";i:166;s:4:\"left\";i:178;s:5:\"width\";i:1371;s:6:\"height\";i:210;}}', 'a:0:{}', 'testTemp', 7);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `test`
 --
 
 CREATE TABLE `test` (
   `test_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `dirpath` varchar(260) DEFAULT NULL
+  `dirpath` varchar(260) DEFAULT NULL,
+  `templateId` int(11) NOT NULL,
+  `mark` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -94,6 +118,12 @@ ALTER TABLE `questions`
   ADD UNIQUE KEY `foreign key` (`test_id`);
 
 --
+-- Indexes for table `template`
+--
+ALTER TABLE `template`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `test`
 --
 ALTER TABLE `test`
@@ -121,6 +151,12 @@ ALTER TABLE `answers`
 --
 ALTER TABLE `questions`
   MODIFY `q_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `template`
+--
+ALTER TABLE `template`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `test`

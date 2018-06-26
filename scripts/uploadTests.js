@@ -1,7 +1,7 @@
 (function () {
 
     var postFiles = function (url,fileData) {
-        fetch(url, {
+        return fetch(url, {
             method:'POST',
             body:fileData
         }).then(function(res) {
@@ -37,7 +37,7 @@
                     formData.append(x+"", fileList.item(x));
                 }
             }
-            postFiles("../controllers/fileUploadController.php?tempName="+"testTemp"+"&tempId="+"20",formData);
+            postFiles("../controllers/fileUploadController.php?tempName="+"testTemp"+"&tempId="+"20",formData)
         }
     };
 

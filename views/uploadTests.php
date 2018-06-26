@@ -42,7 +42,7 @@
         </div>
 
     </div>
-    <div>
+    <div class="text-center send-btn">
         <input class="button" value="Качи" type="button" data-bind="click:$data.sendTests"/>
     </div>
     <script src="../scripts/external/jquery-3.3.1.js" type="text/javascript"></script>

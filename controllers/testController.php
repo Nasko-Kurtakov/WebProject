@@ -25,9 +25,7 @@ if($_SERVER["REQUEST_METHOD"]=="GET"){
 }
 
 if($_SERVER["REQUEST_METHOD"]=="POST") {
-    echo "asd";
     $postData = json_decode(file_get_contents("php://input"), true);
     $stmnt = $conn->prepare("UPDATE `test` SET `mark` = ? WHERE `test`.`test_id` = ?;");
     $stmnt->execute([$postData["mark"],$postData["test_id"]]);
-//    echo "asd";
 }

@@ -1,6 +1,6 @@
 (function () {
 
-    var postFiles = function (url,fileData) {
+    /*var postFiles = function (url,fileData) {
         return fetch(url, {
             method:'POST',
             body:fileData
@@ -9,7 +9,7 @@
         }).catch(function(e) {
             console.log('Error',e);
         });
-    };
+    };*/
 
     getJSONData("../controllers/templateController.php")
         .then(function (templates) {
@@ -20,25 +20,36 @@
         var self = this;
 
         self.templatesList = ko.observableArray([]);
-        self.testName = ko.observable(null);
-        self.selectedTemplateId = ko.observable(null);
+        self.testName = ko.observable("");
+        self.selectedTemplate = ko.observable(null);
 
-        self.selectTemplate = function(templateId){
-          self.selectedTemplateId(templateId);
+        self.error = ko.observable("");
+
+        self.selectTemplate = function(templateVM){
+          self.selectedTemplate(templateVM);
         };
 
         self.sendTests = function () {
-            var input = document.querySelector('input[type="file"]');
-
-            var formData = new FormData();
-            if(input.files) {
-                var fileList = input.files;
-                for(var x=0;x<fileList.length;x++) {
-                    formData.append(x+"", fileList.item(x));
-                }
+            if (!self.testName()) {
+                self.error("Попълнете има на групата тестове.");
+                return;
             }
-            postFiles("../controllers/fileUploadController.php?tempName="+"testTemp"+"&tempId="+"20",formData)
-        }
+            if (!self.selectedTemplate()) {
+                self.error("Изберете шаблон, към който да бъдат прикачени тестовете.");
+                return;
+            }
+            var input = document.querySelector('input[type="file"]');
+            if (input.files.length == 0) {
+                self.error("Няма избрани файлове.");
+                return;
+            }
+            var formData = new FormData();
+            var fileList = input.files;
+            for (var x = 0; x < fileList.length; x++) {
+                formData.append(x + "", fileList.item(x));
+            }
+            postFiles("../controllers/fileUploadController.php?tempName=" + self.testName() + "&tempId=" + self.selectedTemplate().id, formData);
+        };
     };
 
     var sendTestsVM = new sendFiles();

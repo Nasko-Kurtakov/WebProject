@@ -1,16 +1,22 @@
 (function () {
 
-    var url = new URL(window.location.href);
-    var templateId = url.searchParams.get("tempId");
+    // var url = new URL(window.location.href);
+    // var templateId = url.searchParams.get("tempId");
 
-    getJSONData("../controllers/testController.php",{templateId:templateId})
-        .then(function(testArray){
-            scoreTest.setTests(testArray);
-        }).then(function () {
-            getJSONData("../controllers/templateController.php",{id:templateId})
-                .then(function(dataAsJSON){
-                    scoreTest.createTemplate(dataAsJSON);
-                });
+    // getJSONData("../controllers/testController.php",{templateId:20})
+    //     .then(function(testArray){
+    //         scoreTest.setTests(testArray);
+    //     })
+    //     .then(function () {
+    //         getJSONData("../controllers/templateController.php",{id:20})
+    //             .then(function(dataAsJSON){
+    //                 scoreTest.createTemplate(dataAsJSON);
+    //             });
+    //     });
+
+    getJSONData("../controllers/templateController.php")
+        .then(function (templatesArray) {
+            templatesOverviewVM.templatesCollection(templatesArray);
         });
 
     ko.bindingHandlers.testScorer = {
@@ -62,31 +68,31 @@
         }
     };
 
-    var scoreTestVM = function () {
+    var scoreTestVM = function (template) {
         var self = this;
 
-        self.numOfQuestions = ko.observable(0);
+        self.numOfQuestions = template.question_num;
         self.answers = ko.observableArray([]);
         self.testCreated = ko.observable(false);
         self.currentTest = ko.observable(null);
         self.mark = ko.observable("");
-        var areasToShow = ko.observableArray([]);
-        var areasToHide = ko.observableArray([]);
+        var areasToShow = ko.observableArray(template.visible);
+        var areasToHide = ko.observableArray(template.hidden);
         var testsToScore = [];
 
         var nextTest = function () {
           var nextTestIndex = testsToScore.indexOf(self.currentTest())+1;
           if(nextTestIndex!=testsToScore.length){
               self.currentTest(testsToScore[nextTestIndex]);
-              setAnswers();
+              resetTestScorer();
           }else {
               self.currentTest(null);
           }
         };
 
-        var setAnswers = function () {
+        var resetTestScorer = function () {
             var answers = [];
-            for(var i=0;i<self.numOfQuestions();i++){
+            for(var i=0;i<self.numOfQuestions;i++){
                 answers.push({
                     isCorrect:ko.observable(false),
                     comment:ko.observable("")
@@ -94,6 +100,14 @@
             }
             self.answers(answers);
             self.mark("");
+        };
+
+        var init = function(){
+            getJSONData("../controllers/testController.php",{templateId:template.id})
+            .then(function(testArray){
+                resetTestScorer();
+                setTests(testArray);
+            })
         };
 
         self.scoreTest = function () {
@@ -105,16 +119,7 @@
             });
         };
 
-
-        self.createTemplate = function(JSONData){
-            self.testCreated(true);
-            areasToHide(JSONData.hidden);
-            areasToShow(JSONData.visible);
-            self.numOfQuestions(JSONData.question_num);
-            setAnswers();
-        };
-
-        self.setTests = function(testArray){
+        var setTests = function(testArray){
             testsToScore = testArray;
             if(!!testsToScore.length){
                 self.currentTest(testsToScore[0]);
@@ -130,10 +135,31 @@
             areasToHide.subscribe(callback);
         };
 
+        init();
 
     };
 
-    var scoreTest = new scoreTestVM();
+    var scoreTest;
 
-    ko.applyBindings(scoreTest);
+    var templatesOverview = function () {
+        var self=this;
+
+        self.templatesCollection = ko.observableArray([]);
+        self.selectedTemplate = ko.observable(null);
+        self.selectTemplate = function (template) {
+            self.selectedTemplate(template);
+        }
+    };
+    var templatesOverviewVM = new templatesOverview();
+
+    templatesOverviewVM.selectedTemplate.subscribe(function (selectedTemplate) {
+        scoreTest = new scoreTestVM(selectedTemplate);
+    });
+
+    var scoreTestPageVM = {
+        templatesOverview:templatesOverviewVM,
+        scoreTestView: scoreTest
+    };
+
+    ko.applyBindings(scoreTestPageVM);
 })();

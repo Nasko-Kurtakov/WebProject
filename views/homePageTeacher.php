@@ -30,33 +30,28 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     <div class="welcome"> Добре дошъл <span style="color:white"> <?php echo $teacher->getNames() ?></span> </div>
     <div class="row">
         <div class="column firstColumn">
-<!--            <a href="createTest.php">-->
-<!--                <div class="container">-->
-<!--                    <h2>Създай jei</h2>-->
-<!--                    <img src="../img/create.png"-->
-<!--                    <p></p>-->
-<!--                </div>-->
-<!--            </a>-->
             <a href="createTemplate.php">
                 <span class="columnName">Създай</span>
                 <img src="../img/create.png">
-                <span class="description"> Създай и разпечатай нов тест с отворени и затворени въпроси </span>
+                <span class="description"> Създай шаблон за проверка на тестове </span>
             </a>
         </div>
         <div class="column secondColumn">
-            <a href="#">
+            <a href="uploadTests.php">
                 <span class="columnName">Прикачи</span>
                 <img src="../img/import.png">
-                <span class="description"> Прикачи сканиран тест, по който да направиш шаблон за оценка</span>
+                <span class="description"> Прикачи попълнени тестове, които ще оценяваш по-късно</span>
             </a>
         </div>
         <div class="column thirdColumn">
-            <a href="#">
+            <a href="scoreTest.php">
                 <span class="columnName">Оцени</span>
                 <img src="../img/evaluate.png">
                 <span class="description"> Оцени прикачените тестове по създадения вече шаблон за оценка</span>
             </a>
         </div>
+        <!--TODO: add creation of tests using the system-->
+        <!--TODO: add assigning of test to be scored by students-->
     </div>
 </div>
 </body>

@@ -18,6 +18,17 @@ $postData = json_decode(file_get_contents("php://input"), true);
 
 $conn = (new Db())->getConn();
 
+function arrayToObject($array, $recursive=true) {
+    $object = new stdClass;
+    foreach($array as $k => $v) {
+        if($recursive && is_array($v)) {
+            $object->{$k} = arrayToObject($v, $recursive);
+        } else {
+            $object->{$k} = $v;
+        }
+    }
+    return $object;
+}
 
 
 if($_SERVER["REQUEST_METHOD"]=="POST") {
@@ -46,13 +57,23 @@ if($_SERVER["REQUEST_METHOD"]=="GET"){
         $stmnt = $conn->prepare("SELECT * FROM `template` WHERE id = ?");
         $result = $stmnt->execute([$params["id"]]);
         $template = $stmnt->fetch();
-        $template["hidden"] = unserialize($template["hidden"]);
-        $template["visible"] = unserialize($template["visible"]);
-        echo json_encode($template);
+        if(!!$template) {
+            $template["hidden"] = unserialize($template["hidden"]);
+            $template["visible"] = unserialize($template["visible"]);
+            echo json_encode($template);
+        }
+        else{
+            echo "Failed getting template with id:".$params["id"];
+        }
     }else{
         $stmnt = $conn->prepare("SELECT * FROM `template`");
         $result = $stmnt->execute();
-        $template = $stmnt->fetchAll();
-        echo json_encode($template);
+        $templates = $stmnt->fetchAll();
+        foreach ($templates as &$template){
+            $template["hidden"] = unserialize($template["hidden"]);
+            $template["visible"] = unserialize($template["visible"]);
+        }
+        unset($template);
+        echo json_encode($templates);
     }
 }

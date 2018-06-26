@@ -1,6 +1,6 @@
 .view-container {
-    padding: 0 70px;
-}
+     padding: 0 70px;
+ }
 
 img{
     width:100%;
@@ -34,4 +34,9 @@ body{
     left: 50px;
     top:50px;
     z-index: 32;
+}
+.file-picker-container{
+    width: 100%;
+    text-align: center;
+    padding: 200px 0;
 }

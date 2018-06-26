@@ -6,7 +6,6 @@
 
 }
 .left-container {
-    background-color: #019d6e;
     margin-left: 150px;
     margin-top: 150px;
     margin-right: 20px;
@@ -32,4 +31,12 @@
 
 .send-btn{
     margin-top: 20px;
+}
+
+.selected{
+    background-color: #94335c;
+}
+.template-name:hover{
+    background-color: #94335c;
+    cursor:pointer;
 }

@@ -30,7 +30,7 @@ $folderName = $templateId."_".$templateName;
 $targetDir = "../uploads/".$folderName."/";
 makeDirs($targetDir);
 
-foreach ($_FILES  as $file){
+foreach ($_FILES as $file){
     $targetFile = $targetDir . basename($file["name"]);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($targetFile,PATHINFO_EXTENSION));

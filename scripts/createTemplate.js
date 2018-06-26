@@ -99,28 +99,32 @@
                 // }
             };
 
-            $selectionCanvas.attr({
-                width: $(element).width(),
-                height: $(element).height()
-            });
-            $selectionCanvas.css({
-                top: 0,
-                left: 0,
-                display: "block",
-                width: $(element).width(),
-                height: $(element).height()
-            });
-            $markingCanvas.attr({
-                width: $(element).width(),
-                height: $(element).height()
-            });
-            $markingCanvas.css({
-                top: 0,
-                left: 0,
-                display: "block",
-                width: $(element).width(),
-                height: $(element).height()
-            });
+            setTimeout(function () {
+                //this is not a good way to do this,sync is needed;
+                $selectionCanvas.attr({
+                    width: $(element).width(),
+                    height: $(element).height()
+                });
+                $selectionCanvas.css({
+                    top: 0,
+                    left: 0,
+                    display: "block",
+                    width: $(element).width(),
+                    height: $(element).height()
+                });
+
+                $markingCanvas.attr({
+                    width: $(element).width(),
+                    height: $(element).height()
+                });
+                $markingCanvas.css({
+                    top: 0,
+                    left: 0,
+                    display: "block",
+                    width: $(element).width(),
+                    height: $(element).height()
+                });
+            },100);
 
             $selectionCanvas.on("mousedown", selectionHandler);
             $selectionCanvas.on('mousemove', selectionDragHandler);
@@ -134,10 +138,15 @@
 
     var testTemplate = function () {
         var self = this;
-
+        /*private*/
         var areasToShow=ko.observableArray([]);
         var areasToHide=ko.observableArray([]);
-        //mode - selection for hiding and selection for showing
+
+        /*public*/
+        self.testFile = ko.observable("");
+        self.isTestFileSelected = ko.observable(false);
+
+
         self.addArea=function (newArea,mode) {
             if(mode == "hide"){
                 areasToHide.push(newArea);
@@ -159,6 +168,23 @@
                 // .then()
         };
 
+        self.toTemplateCreation = function(){
+            var input = document.querySelector('input[type="file"]');
+            if(input.value) {
+                var formData = new FormData();
+                var fileList = input.files;
+                for (var x = 0; x < fileList.length; x++) {
+                    formData.append(x + "", fileList.item(x));
+                }
+
+                postFiles("../controllers/testForTemplate.php",formData)
+                    .then(function (pathToImgFromServer) {
+                        self.testFile(pathToImgFromServer);
+                        self.isTestFileSelected(true);
+                    });
+            }
+        };
+
         self.subscribeToShowAreas = function (handler) {
             areasToShow.subscribe(handler,null,"arrayChange");
         };
@@ -173,7 +199,7 @@
     var testTemplateVM = new testTemplate();
 
     testTemplateVM.subscribeToShowAreas(function (changes) {
-        changes.forEach((change)=>{
+        changes.forEach(function(change){
             if(change.status=="added"){
                 var rect = change.value;
                 var canvas = document.getElementById("marking-canvas");
@@ -193,7 +219,7 @@
     });
 
     testTemplateVM.subscribeToHideAreas(function (changes) {
-        changes.forEach((change)=>{
+        changes.forEach(function(change){
             if(change.status=="added"){
                 var rect = change.value;
                 var canvas = document.getElementById("marking-canvas");

@@ -22,19 +22,19 @@
         <div class="column left">
             <div class="left-container">
                 <div>Избери тестови шаблон</div>
-                <div class="row">
-                    <!--                    ko foreach:$data.templatesList-->
-                    <div data-bind="text:$data.name, click:function(){
-                            $parent.selectTemplate($data.id);
+                <div class="row text-center">
+                    <!--ko foreach:$data.templatesList-->
+                    <div class="template-name" data-bind="text:$data.name,css:{'selected':($parent.selectedTemplate() && $parent.selectedTemplate().id == $data.id) } ,click:function(){
+                            $parent.selectTemplate($data);
                         }"></div>
-                    <!--                    /ko-->
+                    <!--/ko-->
                 </div>
             </div>
         </div>
         <div class="column right">
             <div class="right-container">
                 <form>
-                    <div><input type="text" placeholder="Име на теста"></div>
+                    <div>Дай име на качвания пакет тестове - <input type="text" placeholder="Име на теста" data-bind="textInput: $data.testName"></div>
                     <input type="file" name="files[]" id="files" multiple="" directory="" webkitdirectory=""
                            mozdirectory="">
                 </form>
@@ -45,6 +45,7 @@
     <div class="text-center send-btn">
         <input class="button" value="Качи" type="button" data-bind="click:$data.sendTests"/>
     </div>
+    <div class="error-msg" data-bind="text:$data.error"></div>
     <script src="../scripts/external/jquery-3.3.1.js" type="text/javascript"></script>
     <script src="../scripts/external/knockout-3.4.2.debug.js" type="text/javascript"></script>
     <script src="../scripts/general.js" type="text/javascript"></script>

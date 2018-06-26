@@ -55,6 +55,20 @@
             });
     }
 
+    function postFiles (url,fileData) {
+        return fetch(url, {
+            method:'POST',
+            body:fileData
+        }).then(function(res) {
+            return res.text();
+        }).then(function(myJson) {
+            return myJson;
+        }).catch(function(e) {
+            console.log('Error',e);
+        });
+    };
+
     window.postJSONData = postJSONData;
     window.getJSONData = getJSONData;
+    window.postFiles = postFiles;
 })();

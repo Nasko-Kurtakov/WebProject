@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2018 at 06:46 PM
+-- Generation Time: Jun 27, 2018 at 10:13 PM
 -- Server version: 5.6.25-enterprise-commercial-advanced-log
 -- PHP Version: 7.2.6
 
@@ -68,15 +68,6 @@ CREATE TABLE `template` (
 --
 
 INSERT INTO `template` (`id`, `hidden`, `visible`, `name`, `question_num`) VALUES
-(4, 'a:1:{i:0;a:4:{s:3:\"top\";i:166;s:4:\"left\";i:178;s:5:\"width\";i:1371;s:6:\"height\";i:210;}}', 'a:0:{}', 'testTemp', 7),
-(5, 'N;', 'N;', 'testTemp', 0),
-(6, 'N;', 'N;', 'testTemp', 0),
-(7, 'N;', 'N;', 'testTemp', 0),
-(8, 'N;', 'N;', 'testTemp', 0),
-(9, 'N;', 'N;', 'testTemp', 0),
-(10, 'N;', 'N;', 'testTemp', 0),
-(11, 'N;', 'N;', 'testTemp', 0),
-(12, 'a:0:{}', 'a:1:{i:0;a:4:{s:3:\"top\";i:136;s:4:\"left\";i:173;s:5:\"width\";i:1402;s:6:\"height\";i:257;}}', 'testTemp', 0),
 (20, 'a:1:{i:0;a:4:{s:3:\"top\";i:475;s:4:\"left\";i:327;s:5:\"width\";i:1144;s:6:\"height\";i:216;}}', 'a:1:{i:0;a:4:{s:3:\"top\";i:168;s:4:\"left\";i:178;s:5:\"width\";i:1374;s:6:\"height\";i:222;}}', 'testTemp', 7);
 
 -- --------------------------------------------------------
@@ -88,26 +79,22 @@ INSERT INTO `template` (`id`, `hidden`, `visible`, `name`, `question_num`) VALUE
 CREATE TABLE `test` (
   `test_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `dirpath` varchar(260) DEFAULT NULL,
-  `templateId` int(11) NOT NULL
+  `dirpath` varchar(260) NOT NULL,
+  `templateId` int(11) NOT NULL,
+  `correct_answers` varchar(255) DEFAULT NULL,
+  `comments` varchar(5000) DEFAULT NULL,
+  `mark` varchar(255) DEFAULT NULL,
+  `assigned_to` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `test`
 --
 
-INSERT INTO `test` (`test_id`, `name`, `dirpath`, `templateId`) VALUES
-(1, 'a', 'asd', 1),
-(2, 'testTemp', '../uploads/20_testTemp/test3.jpg', 20),
-(3, 'testTemp', '../uploads/20_testTemp/test1.jpg', 20),
-(4, 'testTemp', '../uploads/20_testTemp/test2.jpg', 20),
-(5, 'testTemp', '../uploads/20_testTemp/test3.jpg', 20),
-(6, 'testTemp', '../uploads/20_testTemp/test1.jpg', 20),
-(7, 'testTemp', '../uploads/20_testTemp/test2.jpg', 20),
-(8, 'testTemp', '../uploads/20_testTemp/test3.jpg', 20),
-(9, 'dddd', '../uploads/1_dddd/test1.jpg', 1),
-(10, 'dddd', '../uploads/1_dddd/test2.jpg', 1),
-(11, 'dddd', '../uploads/1_dddd/test3.jpg', 1);
+INSERT INTO `test` (`test_id`, `name`, `dirpath`, `templateId`, `correct_answers`, `comments`, `mark`, `assigned_to`) VALUES
+(15, 'testTemp', '../uploads/20_testTemp/test1.jpg', 20, NULL, NULL, NULL, 1),
+(16, 'testTemp', '../uploads/20_testTemp/test2.jpg', 20, NULL, NULL, NULL, 2),
+(17, 'testTemp', '../uploads/20_testTemp/test3.jpg', 19, NULL, NULL, NULL, 4);
 
 -- --------------------------------------------------------
 
@@ -120,16 +107,21 @@ CREATE TABLE `user` (
   `name` varchar(70) NOT NULL,
   `username` varchar(32) NOT NULL,
   `password` char(64) NOT NULL,
-  `user_type` varchar(20) NOT NULL
+  `user_type` varchar(20) NOT NULL,
+  `user_group` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `name`, `username`, `password`, `user_type`) VALUES
-(1, 'Atanas Kurtakov', 'nasko', 'asdf', 'admin'),
-(2, 'Ivan Ivanov', 'ivan', 'asdf', 'student');
+INSERT INTO `user` (`user_id`, `name`, `username`, `password`, `user_type`, `user_group`, `email`) VALUES
+(1, 'Atanas Kurtakov', 'nasko', 'asdf', 'admin', 'admin', 'nasko.kurtakov@gmail.com'),
+(2, 'Ivan Ivanov', 'ivan', 'asdf', 'student', 'SI_2015', 'nasko.kurtakov@gmail.com'),
+(4, 'Atanas Kurtakov', 'petur', 'asdf', 'student', 'SI_2015', 'nasko.kurtakov@gmail.com'),
+(5, 'Stamat Georgiev', 'stamat', 'asdf', 'student', 'KN_2015', 'nasko.kurtakov@gmail.com'),
+(6, 'test', 'test', 'test', 'student', NULL, 'nasko.kurtakov@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -194,13 +186,13 @@ ALTER TABLE `template`
 -- AUTO_INCREMENT for table `test`
 --
 ALTER TABLE `test`
-  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables

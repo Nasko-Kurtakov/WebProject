@@ -48,7 +48,7 @@
             for (var x = 0; x < fileList.length; x++) {
                 formData.append(x + "", fileList.item(x));
             }
-            postFiles("../controllers/fileUploadController.php?tempName=" + self.testName() + "&tempId=" + self.selectedTemplate().id, formData);
+            postFiles("../controllers/fileUploadController.php?assignedTo=" +"tempName=" + self.testName() + "&tempId=" + self.selectedTemplate().id, formData);
         };
     };
 

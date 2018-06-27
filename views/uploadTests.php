@@ -21,7 +21,12 @@
     <div class="row">
         <div class="column left">
             <div class="left-container">
-                <div>Избери тестови шаблон</div>
+                <span>Избери тестови шаблон</span>
+                <a href="createTemplate.php">Създай шаблон</a>
+                <!--ko if:$data.templatesList().length == 0-->
+                    <div class="empty-template-table">Няма направени шаблони</div>
+                <!--/ko-->
+                <!--ko if:$data.templatesList().length != 0-->
                 <div class="row text-center">
                     <!--ko foreach:$data.templatesList-->
                     <div class="template-name" data-bind="text:$data.name,css:{'selected':($parent.selectedTemplate() && $parent.selectedTemplate().id == $data.id) } ,click:function(){
@@ -29,6 +34,7 @@
                         }"></div>
                     <!--/ko-->
                 </div>
+                <!--/ko-->
             </div>
         </div>
         <div class="column right">

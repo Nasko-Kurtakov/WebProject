@@ -32,7 +32,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
         <!--/ko-->
     <!--/ko-->
     <!--ko if: $data.templatesOverview.selectedTemplate() != null-->
-        <!--ko with:$data.scoreTestView-->
+        <!--ko with:$data.scoreTestView()-->
             <!--ko template: 'score-test-view'--><!--/ko-->
         <!--/ko-->
     <!--/ko-->
@@ -63,32 +63,32 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
         <div class="right column text-center">
             <div class="column left-first">
                 <div>№</div>
-                <!--            ko foreach:answers-->
+                <!--ko foreach:answers-->
                 <div data-bind="text:$index()+1">
 
                 </div>
-                <!--            /ko-->
+                <!--/ko-->
             </div>
             <div class="column left-three">
                 <div>Верен</div>
-                <!--            ko foreach:answers-->
+                <!--ko foreach:answers-->
                 <div>
-                    <input type="radio" value="correct" data-bind="checked: $data.isCorrect" />
+                    <input type="radio" value="true" data-bind="checked: $data.isCorrect,attr:{'name':$index()}" />
                 </div>
-                <!--            /ko-->
+                <!--/ko-->
             </div>
             <div class="column middle-three">
                 <div>Грешен</div>
-                <!--            ko foreach:answers-->
+                <!--ko foreach:answers-->
                 <div>
-                    <input type="radio" value="correct" data-bind="checked: $data.isCorrect" />
+                    <input type="radio" value="false" data-bind="checked: $data.isCorrect,attr:{'name':$index()}" />
                 </div>
-                <!--            /ko-->
+                <!--/ko-->
             </div>
             <div class="column right-three">
                 <div>Коментар</div>
                 <!--ko foreach:answers-->
-                <textarea data-bind="text:$data.comment"></textarea>
+                <textarea data-bind="textInput:$data.comment"></textarea>
                 <!--/ko-->
             </div>
             <div style="width: 50%" class="column">

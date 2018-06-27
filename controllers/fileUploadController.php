@@ -63,8 +63,8 @@ foreach ($_FILES as $file){
     } else {
         if (move_uploaded_file($file["tmp_name"], $targetFile)) {
             $conn = (new Db())->getConn();
-            $stmnt = $conn->prepare("INSERT INTO test (name,dirpath,templateId) VALUES (?, ?, ?)");
-            $stmnt->execute([$templateName,$targetFile,$templateId]);
+            $stmnt = $conn->prepare("INSERT INTO test (dirpath,templateId,assigned_to) VALUES (?, ?, ?)");
+            $stmnt->execute([$targetFile,$templateId,]);
         } else {
             echo "Sorry, there was an error uploading your file.";
         }

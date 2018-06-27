@@ -159,7 +159,6 @@
         self.saveAreas=function () {
             var data = {
                 name:"testTemp",
-                testId:420,
                 hidden:areasToHide(),
                 visible:areasToShow(),
                 numOfQuestions:self.numOfQuestions()

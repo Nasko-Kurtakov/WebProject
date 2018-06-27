@@ -21,35 +21,9 @@
 
     ko.bindingHandlers.testScorer = {
         init: function (element, valueAccessor, allBindings, viewModel) {
-
             var scoreTestVM = valueAccessor();
-            scoreTestVM.subscribeVisibleAreas(function (array) {
-                array.forEach(function (selectionArea) {
-                    createVisibleArea(selectionArea,"#f2ff0073");
-                });
-            });
-
-            scoreTestVM.subscribeHiddenAreas(function (hiddenArray) {
-                hiddenArray.forEach(function (element) {
-                    createVisibleArea(element,"#000");
-                });
-            });
-
-
-            var createVisibleArea = function (data,color) {
-                var canvas = document.getElementById("selection-canvas");
-                var ctx = canvas.getContext('2d');
-                ctx.beginPath();
-                ctx.lineWidth="6";
-                ctx.fillStyle=color;
-                // ctx.fillRect(data.left, data.top, data.width, data.height);
-                ctx.fillRect(data.left*0.8, data.top*0.8, data.width*0.8, data.height*0.8);
-                ctx.stroke();
-            };
-
-            var $selectionCanvas = $("#selection-canvas");
-
-            scoreTestVM.testCreated.subscribe(function (test) {
+            setTimeout(function () {
+                var $selectionCanvas = $("#selection-canvas");
                 $selectionCanvas.attr({
                     width: $(element).width(),
                     height: $(element).height()
@@ -61,7 +35,26 @@
                     width: $(element).width(),
                     height: $(element).height()
                 });
-            });
+
+                scoreTestVM.areasToShow().forEach(function (selectionArea) {
+                    createVisibleArea(selectionArea,"#f2ff0073");
+                });
+
+                scoreTestVM.areasToHide().forEach(function (element) {
+                    createVisibleArea(element,"#000");
+                });
+            },100);
+
+            var createVisibleArea = function (data,color) {
+                var canvas = document.getElementById("selection-canvas");
+                var ctx = canvas.getContext('2d');
+                ctx.beginPath();
+                ctx.lineWidth="6";
+                ctx.fillStyle=color;
+                // ctx.fillRect(data.left, data.top, data.width, data.height);
+                ctx.fillRect(data.left*0.8, data.top*0.8, data.width*0.8, data.height*0.8);
+                ctx.stroke();
+            };
 
             ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
             });
@@ -76,8 +69,8 @@
         self.testCreated = ko.observable(false);
         self.currentTest = ko.observable(null);
         self.mark = ko.observable("");
-        var areasToShow = ko.observableArray(template.visible);
-        var areasToHide = ko.observableArray(template.hidden);
+        self.areasToShow = ko.observableArray(template.visible);
+        self.areasToHide = ko.observableArray(template.hidden);
         var testsToScore = [];
 
         var nextTest = function () {
@@ -111,8 +104,19 @@
         };
 
         self.scoreTest = function () {
+
+            var correctAnswers = self.answers().reduce(function(prev,current){
+                return current.isCorrect()==="true" ? prev+1:prev;
+            },0);
+
+            var comments = self.answers().map(function (answer) {
+                return answer.comment();
+            });
+
             postJSONData("../controllers/testController.php",{
                 test_id:this.currentTest().test_id,
+                correct_answers:(correctAnswers+"/"+self.numOfQuestions),
+                comments:comments,
                 mark:this.mark()
             }).then(function () {
                 nextTest();
@@ -124,7 +128,6 @@
             if(!!testsToScore.length){
                 self.currentTest(testsToScore[0]);
             }
-
         };
 
         self.subscribeVisibleAreas = function (callback) {
@@ -139,7 +142,7 @@
 
     };
 
-    var scoreTest;
+    var scoreTest = ko.observable(null);
 
     var templatesOverview = function () {
         var self=this;
@@ -153,7 +156,7 @@
     var templatesOverviewVM = new templatesOverview();
 
     templatesOverviewVM.selectedTemplate.subscribe(function (selectedTemplate) {
-        scoreTest = new scoreTestVM(selectedTemplate);
+        scoreTest(new scoreTestVM(selectedTemplate));
     });
 
     var scoreTestPageVM = {

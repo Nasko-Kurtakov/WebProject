@@ -15,7 +15,7 @@
     width: 50%;
 }
 .right-container{
-    background-color: #94335c;
+    /*background-color: #94335c;*/
     margin-right: 150px;
     margin-top: 150px;
     margin-left: 20px;
@@ -39,4 +39,9 @@
 .template-name:hover{
     background-color: #94335c;
     cursor:pointer;
+}
+
+.empty-template-table{
+    text-align: center;
+    padding-top: 50px;
 }

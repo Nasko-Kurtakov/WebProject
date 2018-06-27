@@ -8,7 +8,7 @@
 
 require_once "../libs/Init.php";
 Init::_init(true);
-
+//require_once "../libs/Db.php";
 use libs\Db;
 
 //$postData = json_decode(file_get_contents("php://input"), true);
@@ -26,6 +26,6 @@ if($_SERVER["REQUEST_METHOD"]=="GET"){
 
 if($_SERVER["REQUEST_METHOD"]=="POST") {
     $postData = json_decode(file_get_contents("php://input"), true);
-    $stmnt = $conn->prepare("UPDATE `test` SET `mark` = ? WHERE `test`.`test_id` = ?;");
-    $stmnt->execute([$postData["mark"],$postData["test_id"]]);
+    $stmnt = $conn->prepare("UPDATE `test` SET `mark` = ?,`correct_answers` = ?,`comments` = ? WHERE `test_id` = ?");
+    $stmnt->execute([$postData["mark"],$postData["correct_answers"],serialize($postData["comments"]),$postData["test_id"]]);
 }

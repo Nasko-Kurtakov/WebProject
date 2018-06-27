@@ -17,20 +17,6 @@ $postData = json_decode(file_get_contents("php://input"), true);
 //print_r((serialize($postData["hidden"])));
 
 $conn = (new Db())->getConn();
-
-function arrayToObject($array, $recursive=true) {
-    $object = new stdClass;
-    foreach($array as $k => $v) {
-        if($recursive && is_array($v)) {
-            $object->{$k} = arrayToObject($v, $recursive);
-        } else {
-            $object->{$k} = $v;
-        }
-    }
-    return $object;
-}
-
-
 if($_SERVER["REQUEST_METHOD"]=="POST") {
 
     if (isset($_SESSION["templateId"]) && $_SESSION["templateId"]) {
@@ -54,6 +40,7 @@ if($_SERVER["REQUEST_METHOD"]=="GET"){
     $params = array();
     parse_str($_SERVER['QUERY_STRING'], $params);
     if(isset($params["id"])) {
+//        SELECT `id`,`hidden`,`visible`,`template`.`name`,`question_num` FROM `template` INNER JOIN test ON `template`.`id`=`test`.`templateId` WHERE `test`.`assigned_to` = 2
         $stmnt = $conn->prepare("SELECT * FROM `template` WHERE id = ?");
         $result = $stmnt->execute([$params["id"]]);
         $template = $stmnt->fetch();

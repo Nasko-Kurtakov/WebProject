@@ -8,8 +8,7 @@
 
 require_once "../libs/Init.php";
 Init::_init(true);
-require_once "../libs/Db.php";
-
+//require_once "../libs/Db.php";
 use libs\Db;
 
 function makeDirs($dirpath, $mode=0700) {
@@ -25,7 +24,7 @@ parse_str($_SERVER['QUERY_STRING'], $params);
 
 $templateId = $params["tempId"];
 $templateName = $params["tempName"];
-
+$assignTo = $params["assignedTo"];
 $folderName = $templateId."_".$templateName;
 $targetDir = "../uploads/".$folderName."/";
 makeDirs($targetDir);
@@ -63,8 +62,8 @@ foreach ($_FILES as $file){
     } else {
         if (move_uploaded_file($file["tmp_name"], $targetFile)) {
             $conn = (new Db())->getConn();
-            $stmnt = $conn->prepare("INSERT INTO test (dirpath,templateId,assigned_to) VALUES (?, ?, ?)");
-            $stmnt->execute([$targetFile,$templateId,]);
+            $stmnt = $conn->prepare("INSERT INTO `test`(`name`, `dirpath`, `templateId`, `assigned_to`) VALUES (?,?,?,?)");
+            $stmnt->execute([$templateName,$targetFile,$templateId,$assignTo]);
         } else {
             echo "Sorry, there was an error uploading your file.";
         }

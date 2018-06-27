@@ -9,14 +9,8 @@
 require_once "../libs/Init.php";
 Init::_init(true);
 
-use libs\Teacher;
+use libs\User;
 use libs\Db;
-
-
-
-//echo $_POST["username"];
-//echo $_POST["password"];
-//var_dump($_POST);
 
 function createUser(string $username,string $password){
     $db = new Db();
@@ -27,23 +21,24 @@ function createUser(string $username,string $password){
     $user = $smth->fetch();
 
     if($user["user_type"] == "student"){
-        createStudent($user["name"],$user["username"],$user["user_type"]);
+        createStudent($user["user_id"],$user["name"],$user["username"],$user["user_type"]);
     }
     if($user["user_type"] == "admin"){
-        createTeacher($user["name"],$user["username"],$user["user_type"]);
+        createTeacher($user["user_id"],$user["name"],$user["username"],$user["user_type"]);
     }
 }
 
-function createTeacher(string $names, string $username,string $userType){
-    $loggedInUser = new Teacher($names,$username,$userType);
+function createTeacher(int $id,$names, string $username,string $userType){
+    $loggedInUser = new User($id,$names,$username,$userType);
     $_SESSION["user"] = $loggedInUser->toString();
     header('Location: ../views/homePageTeacher.php');
 }
 
-function createStudent(string $username,string $password){
-
+function createStudent(int $id,$names, string $username,string $userType){
+    $loggedInUser = new User($id,$names,$username,$userType);
+    $_SESSION["user"] = $loggedInUser->toString();
+    header('Location: ../views/homePageStudent.php');
 }
-
 createUser($_POST["username"],$_POST["password"]);
 
 

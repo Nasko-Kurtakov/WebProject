@@ -29,11 +29,12 @@
           self.selectedTemplate(templateVM);
         };
 
-        self.sendTests = function () {
-            if (!self.testName()) {
-                self.error("Попълнете има на групата тестове.");
-                return;
-            }
+        self.sendTests = function (userId) {
+            //how to get user id from somewhere else
+            // if (!self.testName()) {
+            //     self.error("Попълнете има на групата тестове.");
+            //     return;
+            // }
             if (!self.selectedTemplate()) {
                 self.error("Изберете шаблон, към който да бъдат прикачени тестовете.");
                 return;
@@ -48,7 +49,7 @@
             for (var x = 0; x < fileList.length; x++) {
                 formData.append(x + "", fileList.item(x));
             }
-            postFiles("../controllers/fileUploadController.php?assignedTo=" +"tempName=" + self.testName() + "&tempId=" + self.selectedTemplate().id, formData);
+            postFiles("../controllers/fileUploadController.php?assignedTo="+ userId +"&tempName=" + self.selectedTemplate().name + "&tempId=" + self.selectedTemplate().id, formData);
         };
     };
 

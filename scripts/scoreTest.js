@@ -1,20 +1,8 @@
 (function () {
 
-    // var url = new URL(window.location.href);
-    // var templateId = url.searchParams.get("tempId");
+    var userId = parseInt(sessionStorage.getItem("userId"));
 
-    // getJSONData("../controllers/testController.php",{templateId:20})
-    //     .then(function(testArray){
-    //         scoreTest.setTests(testArray);
-    //     })
-    //     .then(function () {
-    //         getJSONData("../controllers/templateController.php",{id:20})
-    //             .then(function(dataAsJSON){
-    //                 scoreTest.createTemplate(dataAsJSON);
-    //             });
-    //     });
-
-    getJSONData("../controllers/templateController.php")
+    getJSONData("../controllers/templateController.php?userId="+userId)
         .then(function (templatesArray) {
             templatesOverviewVM.templatesCollection(templatesArray);
         });

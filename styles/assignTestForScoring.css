@@ -1,0 +1,47 @@
+.column{
+    float: left;
+}
+.left{
+    width: 50%;
+
+}
+.left-container {
+    margin-left: 150px;
+    margin-top: 150px;
+    margin-right: 20px;
+}
+
+.right{
+    width: 50%;
+}
+.right-container{
+    /*background-color: #94335c;*/
+    margin-right: 150px;
+    margin-top: 150px;
+    margin-left: 20px;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.row{
+    overflow: auto;
+}
+
+.send-btn{
+    margin-top: 20px;
+}
+
+.selected{
+    background-color: #94335c;
+}
+.group-name:hover{
+    background-color: #94335c;
+    cursor:pointer;
+}
+
+.empty-template-table{
+    text-align: center;
+    padding-top: 50px;
+}

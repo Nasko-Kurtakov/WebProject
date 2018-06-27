@@ -9,11 +9,10 @@
 require_once "../libs/Init.php";
 Init::_init();
 
-use libs\Teacher;
+use libs\User;
 
 if (isset($_SESSION["user"]) && $_SESSION["user"]) {
-    $user = $_SESSION["user"];
-    $teacher = new Teacher($user["names"], $user["username"], $user["usertype"]);
+    $teacher = new User($_SESSION["user"]["id"],$_SESSION["user"]["names"], $_SESSION["user"]["username"], $_SESSION["user"]["usertype"]);
 }
 ?>
 

@@ -9,15 +9,17 @@
 namespace libs;
 
 
-class Teacher
+class User
 {
     //id,pass,username,name,usertype
+    private $id;
     private $names;
     private $username;
     private $usertype;
 
-    public function __construct(string $names,string $username,string $usertype)
+    public function __construct(int $id,string $names,string $username,string $usertype)
     {
+        $this->id = $id;
         $this->names = $names;
         $this->username = $username;
         $this->usertype = $usertype;
@@ -25,6 +27,7 @@ class Teacher
 
     public function toString(){
         $arr=array();
+        $arr["id"]=$this->id;
         $arr["username"]=$this->username;
         $arr["names"]=$this->names;
         $arr["usertype"]=$this->usertype;

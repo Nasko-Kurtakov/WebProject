@@ -108,7 +108,7 @@
               })
             };
 
-            postData("../controllers/testController.php",testData);
+            //postData("../controllers/testController.php",testData);
                 // .then(data => console.log(data)) // JSON from `response.json()` call
                 // .catch(error => console.error(error));
         }

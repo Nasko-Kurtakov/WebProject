@@ -5,7 +5,14 @@
  * Date: 25.06.18
  * Time: 0:20
  */
+require_once "../libs/Init.php";
+Init::_init();
 
+use libs\User;
+
+if (isset($_SESSION["user"]) && $_SESSION["user"]) {
+    $teacher = new User($_SESSION["user"]["id"],$_SESSION["user"]["names"], $_SESSION["user"]["username"], $_SESSION["user"]["usertype"]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +47,6 @@
         <div class="column right">
             <div class="right-container">
                 <form>
-                    <div>Дай име на качвания пакет тестове - <input type="text" placeholder="Име на теста" data-bind="textInput: $data.testName"></div>
                     <input type="file" name="files[]" id="files" multiple="" directory="" webkitdirectory=""
                            mozdirectory="">
                 </form>
@@ -49,7 +55,10 @@
 
     </div>
     <div class="text-center send-btn">
-        <input class="button" value="Качи" type="button" data-bind="click:$data.sendTests"/>
+        <input class="button" value="Качи" type="button" data-bind="click:function(){
+                    var userId = <?php echo $_SESSION["user"]["id"]; ?>;
+                    $data.sendTests(userId);
+            }"/>
     </div>
     <div class="error-msg" data-bind="text:$data.error"></div>
     <script src="../scripts/external/jquery-3.3.1.js" type="text/javascript"></script>

@@ -6,19 +6,18 @@
 
 .header {
     color: #2d2d2d;
-    padding: 15px;
+    margin-bottom: 40px;
     text-align: center;
     font-size: 70px;
 }
 
 body{
-    background-color: #cecac1;
     padding:5% 0;
     margin: 0;
 }
 
 .row{
-    overflow: hidden;
+    overflow: visible;
     display: flex;
     width: 100%;
 }
@@ -43,8 +42,7 @@ body{
 }
 
 .fourthColumn{
-    /*background-color: #445f6a;*/
-    background-color: #0d6993
+    background-color: #196689
 }
 
 /*.last {margin-right: 0;}*/

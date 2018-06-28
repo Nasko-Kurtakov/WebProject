@@ -13,8 +13,7 @@
 /*}*/
 
 .notes{
-    position: fixed;
-    left: 5%;
+    margin-left:50px;
 }
 
 /*.homeButton {*/
@@ -23,7 +22,7 @@
 /*}*/
 
 .main-content-holder{
-    margin-top: 50px;
+    /*margin-top: 50px;*/
 }
 
 /*.success{*/
@@ -52,10 +51,17 @@
 }
 
 .caption-text{
-    margin: 100px auto;
+    margin: 50px auto;
 }
 
 .file-picker-container{
     text-align: center;
     padding: 200px;
 }
+
+.error{
+    padding-top: 45px;
+    display: block;
+    text-align: center;
+}
+

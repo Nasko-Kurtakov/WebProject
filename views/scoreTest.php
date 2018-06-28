@@ -10,8 +10,13 @@ require_once "../libs/Init.php";
 Init::_init();
 
 use libs\User;
+
 if (isset($_SESSION["user"]) && $_SESSION["user"]) {
-    $teacher = new User($_SESSION["user"]["id"],$_SESSION["user"]["names"], $_SESSION["user"]["username"], $_SESSION["user"]["usertype"]);
+    $user = new User($_SESSION["user"]["id"],$_SESSION["user"]["names"], $_SESSION["user"]["username"], $_SESSION["user"]["usertype"]);
+    $mainPage = $user->getUserType() == "admin" ? "homePageTeacher.php" : "homePageStudent.php";
+}else {
+    session_destroy();
+    header("../views/login.php");
 }
 ?>
 
@@ -20,10 +25,20 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../styles/external/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../styles/shared.css" rel="stylesheet"/>
     <link href="../styles/scoreTest.css" rel="stylesheet"/>
     <title>Оценка на тест</title>
 </head>
 <body>
+<div class="w3-bar w3-dark-grey w3-border w3-large" >
+    <a href="<?php echo $mainPage?>" class="w3-bar-item w3-button homeButton"><i class="fa fa-home"></i></a>
+    <button class="w3-bar-item w3-button w3-mobile send-btn" data-bind="click:function(){
+                    $data.scoreTest();
+            }">Оцени</button>
+</div>
+<div class="container">
     <!--ko if: $data.templatesOverview.selectedTemplate() == null-->
         <!--ko with:$data.templatesOverview-->
             <!--ko template: 'templates-overview'--><!--/ko-->
@@ -34,7 +49,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
             <!--ko template: 'score-test-view'--><!--/ko-->
         <!--/ko-->
     <!--/ko-->
-
+</div>
 <script type="text/html" id="templates-overview">
     <div class="all-templates-container">
         <div class="temp-row">

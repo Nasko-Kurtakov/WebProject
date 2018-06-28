@@ -1,47 +1,70 @@
 .column{
     float: left;
+    margin: 100px auto;
+    padding: 100px;
 }
 .left{
     width: 50%;
-
-}
-.left-container {
-    margin-left: 150px;
-    margin-top: 150px;
-    margin-right: 20px;
 }
 
 .right{
     width: 50%;
 }
-.right-container{
-    /*background-color: #94335c;*/
-    margin-right: 150px;
-    margin-top: 150px;
-    margin-left: 20px;
-}
-
-.text-center{
-    text-align: center;
-}
 
 .row{
-    overflow: auto;
+    /*overflow: hidden;*/
+    display: flex;
+    width: 100%;
 }
 
-.send-btn{
-    margin-top: 20px;
+.templates-column{
+    flex:50%;
 }
 
 .selected{
-    background-color: #94335c;
+    background-color: #0d6993;
+    border: 1px solid #0d6993;
+    border-radius: 4px;
 }
-.template-name:hover{
-    background-color: #94335c;
+.template-row:hover{
+    background-color: #0d6993;
+    border: 1px solid #0d6993;
+    border-radius: 4px;
     cursor:pointer;
+}
+
+.file-row{
+    background-color: #8ac747;
+    border: 1px solid #8ac747;
+    border-radius: 4px;
+}
+
+.table{
+    margin-top:20px;
 }
 
 .empty-template-table{
     text-align: center;
     padding-top: 50px;
+}
+
+.send-btn {
+    float: right !important;
+    background-color: #2e8a52;
+}
+
+form[id="pickFiles"]{
+    display: inline-block;
+}
+
+.create-new-template{
+    display: inline-block;
+    font-size: 1.25em;
+    background: #019d6e;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
 }

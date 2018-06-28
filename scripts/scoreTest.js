@@ -1,53 +1,8 @@
 (function () {
-
-    // var userId = parseInt(sessionStorage.getItem("userId"));
-
     getJSONData("../controllers/templateController.php")
         .then(function (templatesArray) {
             templatesOverviewVM.templatesCollection(templatesArray);
         });
-
-    // ko.bindingHandlers.testScorer = {
-    //     init: function (element, valueAccessor, allBindings, viewModel) {
-    //         var scoreTestVM = valueAccessor();
-    //         setTimeout(function () {
-    //             var $selectionCanvas = $("#selection-canvas");
-    //             $selectionCanvas.attr({
-    //                 width: $(element).width(),
-    //                 height: $(element).height()
-    //             });
-    //             $selectionCanvas.css({
-    //                 top: 0,
-    //                 left: 0,
-    //                 display: "block",
-    //                 width: $(element).width(),
-    //                 height: $(element).height()
-    //             });
-    //
-    //             scoreTestVM.areasToShow().forEach(function (selectionArea) {
-    //                 createVisibleArea(selectionArea,"#f2ff0073");
-    //             });
-    //
-    //             scoreTestVM.areasToHide().forEach(function (element) {
-    //                 createVisibleArea(element,"#000");
-    //             });
-    //         },100);
-    //
-    //         var createVisibleArea = function (data,color) {
-    //             var canvas = document.getElementById("selection-canvas");
-    //             var ctx = canvas.getContext('2d');
-    //             ctx.beginPath();
-    //             ctx.lineWidth="6";
-    //             ctx.fillStyle=color;
-    //             // ctx.fillRect(data.left, data.top, data.width, data.height);
-    //             ctx.fillRect(data.left*0.8, data.top*0.8, data.width*0.8, data.height*0.8);
-    //             ctx.stroke();
-    //         };
-    //
-    //         ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
-    //         });
-    //     }
-    // };
 
     var scoreTestVM = function (template) {
         var self = this;

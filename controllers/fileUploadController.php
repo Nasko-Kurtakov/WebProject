@@ -10,6 +10,7 @@ require_once "../libs/Init.php";
 Init::_init(true);
 use libs\Db;
 use libs\User;
+use libs\ImageManipulator;
 
 if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     $user = new User($_SESSION["user"]["id"],$_SESSION["user"]["names"], $_SESSION["user"]["username"], $_SESSION["user"]["usertype"]);
@@ -31,34 +32,10 @@ parse_str($_SERVER['QUERY_STRING'], $params);
 
 $templateId = $params["tempId"];
 $templateName = $params["tempName"];
-$assignTo = $params["assignedTo"];
+$assignTo = $user->getId();
 $folderName = $templateId."_".$templateName;
 $targetDir = "../uploads/".$folderName."/";
 makeDirs($targetDir);
-
-function imageCreateFromAny($filepath) {
-    $type = exif_imagetype($filepath); // [] if you don't have exif you could use getImageSize()
-    $allowedTypes = array(
-        1,  // [] gif
-        2,  // [] jpg
-        3  // [] png
-    );
-    if (!in_array($type, $allowedTypes)) {
-        return false;
-    }
-    switch ($type) {
-        case 1 :
-            $im = imageCreateFromGif($filepath);
-            break;
-        case 2 :
-            $im = imageCreateFromJpeg($filepath);
-            break;
-        case 3 :
-            $im = imageCreateFromPng($filepath);
-            break;
-    }
-    return $im;
-}
 
 function getAreas($templateId) {
     $conn=(new Db())->getConn();
@@ -68,9 +45,15 @@ function getAreas($templateId) {
     return $areasToDraw;
 }
 
+function saveImageInDb($templateName,$targetFile,$templateId,$assignTo){
+    $conn = (new Db())->getConn();
+    $stmnt = $conn->prepare("INSERT INTO `test`(`name`, `dirpath`, `templateId`, `assigned_to`) VALUES (?,?,?,?)");
+    $stmnt->execute([$templateName,$targetFile,$templateId,$assignTo]);
+}
+
+$uploadOk = 1;
 foreach ($_FILES as $file){
     $targetFile = $targetDir . basename($file["name"]);
-    $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($targetFile,PATHINFO_EXTENSION));
     // Check if file already exists
     if (file_exists($targetFile)) {
@@ -89,26 +72,15 @@ foreach ($_FILES as $file){
     // if everything is ok, try to upload file
     } else {
         if (move_uploaded_file($file["tmp_name"], $targetFile)) {
-            $conn = (new Db())->getConn();
-            $stmnt = $conn->prepare("INSERT INTO `test`(`name`, `dirpath`, `templateId`, `assigned_to`) VALUES (?,?,?,?)");
-            $stmnt->execute([$templateName,$targetFile,$templateId,$assignTo]);
-            $im=imageCreateFromAny($targetFile);
+            saveImageInDb($templateName,$targetFile,$templateId,$assignTo);
             $areas=getAreas($templateId);
             $areas["hidden"] = unserialize($areas["hidden"]);
             $areas["visible"] = unserialize($areas["visible"]);
-            foreach ($areas["hidden"] as $hiddenArea){
-                $black = imagecolorallocate($im, 0, 0, 0);
-                imagefilledrectangle($im, $hiddenArea["left"], $hiddenArea["top"], $hiddenArea["left"]+$hiddenArea["width"], $hiddenArea["top"]+$hiddenArea["height"], $black);
-                imagejpeg($im,$targetFile);
-            }
-            foreach ($areas["visible"] as $visibleArea){
-                $green = imagecolorallocate($im, 0, 255, 0);
-                imagerectangle($im, $visibleArea["left"], $visibleArea["top"], $visibleArea["left"]+$visibleArea["width"], $visibleArea["top"]+$visibleArea["height"], $green);
-                imagejpeg($im,$targetFile);
-            }
-            imagedestroy($im);
+            ImageManipulator::drawHiddenAreas($targetFile,$areas["hidden"]);
+            ImageManipulator::drawVisibleAreas( $targetFile,$areas["visible"]);
         } else {
-            echo "Sorry, there was an error uploading your file.";
+            echo false;
         }
     }
 }
+echo $uploadOk;

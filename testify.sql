@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 27, 2018 at 10:13 PM
+-- Generation Time: Jun 28, 2018 at 06:06 PM
 -- Server version: 5.6.25-enterprise-commercial-advanced-log
 -- PHP Version: 7.2.6
 
@@ -25,33 +25,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `answers`
---
-
-CREATE TABLE `answers` (
-  `answer_id` int(11) NOT NULL,
-  `answer` varchar(1024) DEFAULT NULL,
-  `symbol` varchar(1) DEFAULT NULL,
-  `q_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `questions`
---
-
-CREATE TABLE `questions` (
-  `q_id` int(11) NOT NULL,
-  `question` varchar(1024) NOT NULL,
-  `type` varchar(10) NOT NULL,
-  `correct_answer` varchar(5) DEFAULT NULL,
-  `test_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `template`
 --
 
@@ -60,15 +33,17 @@ CREATE TABLE `template` (
   `hidden` text,
   `visible` text,
   `name` varchar(20) NOT NULL,
-  `question_num` int(11) NOT NULL
+  `question_num` int(11) NOT NULL,
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `template`
 --
 
-INSERT INTO `template` (`id`, `hidden`, `visible`, `name`, `question_num`) VALUES
-(20, 'a:1:{i:0;a:4:{s:3:\"top\";i:475;s:4:\"left\";i:327;s:5:\"width\";i:1144;s:6:\"height\";i:216;}}', 'a:1:{i:0;a:4:{s:3:\"top\";i:168;s:4:\"left\";i:178;s:5:\"width\";i:1374;s:6:\"height\";i:222;}}', 'testTemp', 7);
+INSERT INTO `template` (`id`, `hidden`, `visible`, `name`, `question_num`, `date_created`) VALUES
+(17, 'a:4:{i:0;a:4:{s:3:\"top\";i:93;s:4:\"left\";i:214;s:5:\"width\";i:72;s:6:\"height\";i:107;}i:1;a:4:{s:3:\"top\";i:84;s:4:\"left\";i:293;s:5:\"width\";i:50;s:6:\"height\";i:118;}i:2;a:4:{s:3:\"top\";i:79;s:4:\"left\";i:353;s:5:\"width\";i:65;s:6:\"height\";i:130;}i:3;a:4:{s:3:\"top\";i:106;s:4:\"left\";i:668;s:5:\"width\";i:142;s:6:\"height\";i:147;}}', 'a:3:{i:0;a:4:{s:3:\"top\";i:81;s:4:\"left\";i:98;s:5:\"width\";i:109;s:6:\"height\";i:125;}i:1;a:4:{s:3:\"top\";i:80;s:4:\"left\";i:444;s:5:\"width\";i:45;s:6:\"height\";i:108;}i:2;a:4:{s:3:\"top\";i:85;s:4:\"left\";i:544;s:5:\"width\";i:83;s:6:\"height\";i:135;}}', 'rather test 2', 22, '2018-06-28 14:59:25'),
+(20, 'a:1:{i:0;a:4:{s:3:\"top\";i:475;s:4:\"left\";i:327;s:5:\"width\";i:1144;s:6:\"height\";i:216;}}', 'a:1:{i:0;a:4:{s:3:\"top\";i:168;s:4:\"left\";i:178;s:5:\"width\";i:1374;s:6:\"height\";i:222;}}', 'testTemp', 7, '2018-06-28 12:17:19');
 
 -- --------------------------------------------------------
 
@@ -94,7 +69,20 @@ CREATE TABLE `test` (
 INSERT INTO `test` (`test_id`, `name`, `dirpath`, `templateId`, `correct_answers`, `comments`, `mark`, `assigned_to`) VALUES
 (15, 'testTemp', '../uploads/20_testTemp/test1.jpg', 20, NULL, NULL, NULL, 1),
 (16, 'testTemp', '../uploads/20_testTemp/test2.jpg', 20, NULL, NULL, NULL, 2),
-(17, 'testTemp', '../uploads/20_testTemp/test3.jpg', 19, NULL, NULL, NULL, 4);
+(17, 'testTemp', '../uploads/20_testTemp/test3.jpg', 19, NULL, NULL, NULL, 4),
+(18, 'rather test 2', '../uploads/17_rather test 2/test1.jpg', 17, NULL, NULL, NULL, 1),
+(19, 'rather test 2', '../uploads/17_rather test 2/test2.jpg', 17, NULL, NULL, NULL, 1),
+(20, 'rather test 2', '../uploads/17_rather test 2/test3.jpg', 17, NULL, NULL, NULL, 1),
+(21, 'rather test 2', '../uploads/17_rather test 2/test1.jpg', 17, NULL, NULL, NULL, 1),
+(22, 'rather test 2', '../uploads/17_rather test 2/test1.jpg', 17, NULL, NULL, NULL, 1),
+(23, 'rather test 2', '../uploads/17_rather test 2/test2.jpg', 17, NULL, NULL, NULL, 1),
+(24, 'rather test 2', '../uploads/17_rather test 2/test3.jpg', 17, NULL, NULL, NULL, 1),
+(25, 'rather test 2', '../uploads/17_rather test 2/test1.jpg', 17, NULL, NULL, NULL, 1),
+(26, 'rather test 2', '../uploads/17_rather test 2/test2.jpg', 17, NULL, NULL, NULL, 1),
+(27, 'rather test 2', '../uploads/17_rather test 2/test3.jpg', 17, NULL, NULL, NULL, 1),
+(28, 'rather test 2', '../uploads/17_rather test 2/test1.jpg', 17, NULL, NULL, NULL, 1),
+(29, 'rather test 2', '../uploads/17_rather test 2/test2.jpg', 17, NULL, NULL, NULL, 1),
+(30, 'rather test 2', '../uploads/17_rather test 2/test3.jpg', 17, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -128,20 +116,6 @@ INSERT INTO `user` (`user_id`, `name`, `username`, `password`, `user_type`, `use
 --
 
 --
--- Indexes for table `answers`
---
-ALTER TABLE `answers`
-  ADD PRIMARY KEY (`answer_id`),
-  ADD UNIQUE KEY `foreign key` (`q_id`);
-
---
--- Indexes for table `questions`
---
-ALTER TABLE `questions`
-  ADD PRIMARY KEY (`q_id`),
-  ADD UNIQUE KEY `foreign key` (`test_id`);
-
---
 -- Indexes for table `template`
 --
 ALTER TABLE `template`
@@ -165,50 +139,22 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `answers`
---
-ALTER TABLE `answers`
-  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `questions`
---
-ALTER TABLE `questions`
-  MODIFY `q_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `template`
 --
 ALTER TABLE `template`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `test`
 --
 ALTER TABLE `test`
-  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `answers`
---
-ALTER TABLE `answers`
-  ADD CONSTRAINT `fk_q_id` FOREIGN KEY (`q_id`) REFERENCES `questions` (`q_id`);
-
---
--- Constraints for table `questions`
---
-ALTER TABLE `questions`
-  ADD CONSTRAINT `fk_test_id` FOREIGN KEY (`test_id`) REFERENCES `test` (`test_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

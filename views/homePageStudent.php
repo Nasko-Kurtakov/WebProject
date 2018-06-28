@@ -12,8 +12,10 @@ Init::_init();
 use libs\User;
 
 if (isset($_SESSION["user"]) && $_SESSION["user"]) {
-    $user = $_SESSION["user"];
-    $teacher = new User($user["id"],$user["names"], $user["username"], $user["usertype"]);
+    $user = new User($_SESSION["user"]["id"],$_SESSION["user"]["names"], $_SESSION["user"]["username"], $_SESSION["user"]["usertype"]);
+}else {
+    session_destroy();
+    header("../views/login.php");
 }
 ?>
 
@@ -22,8 +24,8 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="../styles/styleAdmin.css" rel="stylesheet"/>
-    <link href="../styles/styleAdmin.css" rel="stylesheet"/>
+    <link href="../styles/homePageTeacher.css" rel="stylesheet"/>
+    <link href="../styles/homePageTeacher.css" rel="stylesheet"/>
     <title>Добре дошъл <?php echo $teacher->getNames(); ?></title>
 </head>
 <body>
@@ -40,9 +42,4 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     </div>
 </div>
 </body>
-<script type="text/javascript">
-    debugger;
-    var userId = <?php echo $_SESSION["user"]["id"]; ?>;
-    sessionStorage.setItem('userId', userId);
-</script>
 </html>

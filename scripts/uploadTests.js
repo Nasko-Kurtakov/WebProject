@@ -22,34 +22,38 @@
         self.templatesList = ko.observableArray([]);
         self.testName = ko.observable("");
         self.selectedTemplate = ko.observable(null);
-
+        self.testFiles = ko.observable(null);
+        self.success = ko.observable("");
         self.error = ko.observable("");
+
+        self.onFilesSelectedEvent = function(vm,e){
+          self.testFiles(e.target.files);
+        };
 
         self.selectTemplate = function(templateVM){
           self.selectedTemplate(templateVM);
         };
 
-        self.sendTests = function (userId) {
-            //how to get user id from somewhere else
-            // if (!self.testName()) {
-            //     self.error("Попълнете има на групата тестове.");
-            //     return;
-            // }
+        self.sendTests = function () {
             if (!self.selectedTemplate()) {
                 self.error("Изберете шаблон, към който да бъдат прикачени тестовете.");
                 return;
             }
             var input = document.querySelector('input[type="file"]');
-            if (input.files.length == 0) {
+            if (self.testFiles() == null || self.testFiles().length == 0) {
                 self.error("Няма избрани файлове.");
                 return;
             }
             var formData = new FormData();
-            var fileList = input.files;
-            for (var x = 0; x < fileList.length; x++) {
-                formData.append(x + "", fileList.item(x));
+            for (var x = 0; x < self.testFiles().length; x++) {
+                formData.append(x + "", self.testFiles().item(x));
             }
-            postFiles("../controllers/fileUploadController.php?assignedTo="+ userId +"&tempName=" + self.selectedTemplate().name + "&tempId=" + self.selectedTemplate().id, formData);
+            postFiles("../controllers/fileUploadController.php?tempName=" + self.selectedTemplate().name + "&tempId=" + self.selectedTemplate().id, formData)
+            .then(function (response) {
+                if(response==1){
+                    self.success("Файловете бяха качени.");
+                }
+            })
         };
     };
 

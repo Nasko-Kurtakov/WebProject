@@ -4,22 +4,31 @@
     font-family: "Bebas Neue", sans-serif;
 }
 
-/* Create three equal columns that floats next to each other */
+.header {
+    color: #2d2d2d;
+    padding: 15px;
+    text-align: center;
+    font-size: 70px;
+}
+
+body{
+    background-color: #cecac1;
+    padding:5% 0;
+}
+
+.row{
+    overflow: hidden;
+    display: flex;
+    width: 100%;
+}
+
 .column {
     float: left;
     width: 30%;
     padding: 50px;
     margin: 0 15px;
-
 }
 
-.welcome{
-    color: #2d2d2d;
-    text-align: center;
-    font-size: 70px;
-    margin-bottom: -50px;
-    margin-top: 80px;
-}
 .firstColumn{
     background-color: #019d6e;
 }
@@ -32,33 +41,25 @@
     background-color: #f08d2f;
 }
 
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
+.fourthColumn{
+    /*background-color: #445f6a;*/
+    background-color: #0d6993
 }
 
-.row{
-    padding: 10% 0 0 0;
-}
-
-body{
-    background-color: #cecac1;
-}
+/*.last {margin-right: 0;}*/
 
 .columnName{
     color: #FFFFFF;
     font-size: 40px;
-    display: block;
-    margin: 0px auto;
-    width: 100px;
     padding: 20px;
+    margin: auto;
+    width: 50%;
 }
 
 .description{
     color:#FFFFFF;
     font-size: 25px;
+    padding-top: 20px;
 }
 
 a{
@@ -70,13 +71,7 @@ a{
         width: 100%;
     }
 }
-
-
 img{
     width:100%;
-}
-
-.view-container{
-    padding:0 70px;
 }
 

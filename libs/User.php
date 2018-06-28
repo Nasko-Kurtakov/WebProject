@@ -43,6 +43,6 @@ class User
     }
 
     public function getUserType(){
-        return $this->id;
+        return $this->usertype;
     }
 }

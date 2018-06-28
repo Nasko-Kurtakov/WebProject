@@ -29,8 +29,9 @@
     overflow: auto;
 }
 
-.send-btn{
-    margin-top: 20px;
+.assign-btn{
+    float: right !important;
+    background-color: #2e8a52;
 }
 
 .selected{

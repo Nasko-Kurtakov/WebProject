@@ -13,6 +13,10 @@ use libs\User;
 
 if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     $user = new User($_SESSION["user"]["id"],$_SESSION["user"]["names"], $_SESSION["user"]["username"], $_SESSION["user"]["usertype"]);
+    $mainPage = $user->getUserType() == "admin" ? "homePageTeacher.php" : "homePageStudent.php";
+}else {
+    session_destroy();
+    header("../views/login.php");
 }
 ?>
 
@@ -21,10 +25,18 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../styles/external/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../styles/shared.css" rel="stylesheet"/>
     <link href="../styles/assignTestForScoring.css" rel="stylesheet"/>
     <title>Назначи тестове за оценяване</title>
 </head>
 <body>
+<div class="w3-bar w3-dark-grey w3-border w3-large" >
+    <a href="<?php echo $mainPage?>" class="w3-bar-item w3-button homeButton"><i class="fa fa-home"></i></a>
+    <button class="w3-bar-item w3-button w3-mobile assign-btn" data-bind="click:$data.assign">Назначи</button>
+</div>
+<div class="container">
     <div>
         Изберете тест и групата ученици, които да го оценяват.
     </div>
@@ -65,15 +77,14 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
         </div>
 
     </div>
-    <div class="text-center send-btn">
-        <input class="button" value="Назначи за оценка" type="button" data-bind="click:$data.assign"/>
-    </div>
+
     <div class="text-center" data-bind="text:self.error">
     </div>
-    <script src="../scripts/external/jquery-3.3.1.js" type="text/javascript"></script>
-    <script src="../scripts/external/knockout-3.4.2.debug.js" type="text/javascript"></script>
-    <script src="../scripts/general.js" type="text/javascript"></script>
-    <script src="../scripts/assignTestForScoring.js" type="text/javascript"></script>
+</div>
+<script src="../scripts/external/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="../scripts/external/knockout-3.4.2.debug.js" type="text/javascript"></script>
+<script src="../scripts/general.js" type="text/javascript"></script>
+<script src="../scripts/assignTestForScoring.js" type="text/javascript"></script>
 </body>
 </html>
 

@@ -1,0 +1,58 @@
+
+body{
+    background-color: #cecac1;
+}
+
+.w3-bar{
+    position: fixed;
+    top: 0;
+    z-index: 100;
+}
+.container{
+    margin-top: 50px;
+}
+.w3-input{
+    margin-left: 8px;
+}
+
+.homeButton {
+    background-color: #94335c;
+    /*float: right;*/
+}
+
+.success{
+    color: #01BF8E;
+}
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: #019d6e;
+    display: inline-block;
+    cursor: pointer; /* "hand" cursor */
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: #01BF8E;
+}
+
+.inputfile:focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.text-center{
+    text-align: center;
+}

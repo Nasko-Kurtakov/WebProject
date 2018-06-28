@@ -11,23 +11,16 @@
             var $markingCanvas = $("#marking-canvas");
 
             var selectionEndHandler = function (e) {
-                if(!isDragging) return;
-                isDragging=false;
-                // $selectionCanvas.off("mousedown");
-                // $selectionCanvas.off("mousemove");
-                // $selectionCanvas.off("mouseup");
+                $selectionCanvas.off('mousemove', selectionDragHandler);
+                $selectionCanvas.off('mouseup', selectionEndHandler);
+
                 var canvas = $selectionCanvas[0];
                 var ctx = canvas.getContext('2d');
                 ctx.clearRect(0, 0, $selectionCanvas.width(), $selectionCanvas.height()); //clear canvas
                 $selectionCanvas.css({
                     top: 0,
-                    left: 0,
-                    // display: "none"
+                    left: 0
                 });
-                //     .attr({
-                //     width: 0,
-                //     height: 0
-                // });
 
                 //when moving is from right to left width is a negative value and group is buggy
                 if (groupRect.width < 0) {
@@ -45,7 +38,7 @@
                     left:Math.round(groupRect.left),
                     width:Math.round(groupRect.width),
                     height:Math.round(groupRect.height)
-                }
+                };
 
                 testTemplateVM.addArea(groupRect,selectionMode);
 
@@ -53,7 +46,6 @@
                 e.stopImmediatePropagation();
             };
             var selectionDragHandler = function (e) {
-                if(!isDragging) return;
                 var canvas = $selectionCanvas[0];
                 var ctx = canvas.getContext('2d');
                 ctx.clearRect(0, 0, $selectionCanvas.width(), $selectionCanvas.height()); //clear canvas
@@ -67,26 +59,17 @@
                 ctx.stroke();
                 e.stopPropagation();
                 return false;
-            }
+            };
             var selectionHandler = function (e) {
-                isDragging=true;
+                $selectionCanvas.on('mousemove', selectionDragHandler);
+                $selectionCanvas.on('mouseup', selectionEndHandler);
+
                 if (e.shiftKey) {
                     selectionMode = "hide";
                 }
                 else{
                     selectionMode = "show";
                 }
-                // $selectionCanvas.attr({
-                //     width: $(element).width(),
-                //     height: $(element).height()
-                // });
-                // $selectionCanvas.css({
-                //     top: 0,
-                //     left: 0,
-                //     display: "block",
-                //     width: $(element).width(),
-                //     height: $(element).height()
-                // });
                 groupRect = {
                     top: (e.pageY - $selectionCanvas.offset().top),
                     left: (e.pageX - $selectionCanvas.offset().left),
@@ -96,19 +79,11 @@
                 e.stopPropagation();
                 e.stopImmediatePropagation();
                 return false;
-                // }
             };
 
             setTimeout(function () {
                 //this is not a good way to do this,sync is needed;
 
-                // var img = document.getElementById("the-img");
-                // var imgDims = {
-                //     width:img.naturalWidth,
-                //     height:img.naturalHeight
-                // };
-                // img.width = imgDims.width;
-                // img.height = imgDims.height;
                 $selectionCanvas.attr({
                     width: $(element).width(),
                     height: $(element).height()
@@ -135,11 +110,10 @@
             },100);
 
             $selectionCanvas.on("mousedown", selectionHandler);
-            $selectionCanvas.on('mousemove', selectionDragHandler);
-            $selectionCanvas.on('mouseup', selectionEndHandler);
+
 
             ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
-                $(document).off("mousedown", multipleSelectionHandler);
+                $selectionCanvas.off("mousedown", selectionHandler);
             });
         }
     };
@@ -152,9 +126,39 @@
 
         /*public*/
         self.testFile = ko.observable("");
+        self.fileImg = ko.observable(null);
         self.testName = ko.observable("");
         self.isTestFileSelected = ko.observable(false);
+        self.numOfQuestions = ko.observable("");
+        self.error = ko.observable("");
+        self.success = ko.observable("");
 
+        self.testFile.subscribe(function (newValue) {
+            if(!!newValue){
+                var input = document.querySelector('input[type="file"]');
+                if(input.value) {
+                    var formData = new FormData();
+                    var fileList = input.files;
+                    for (var x = 0; x < fileList.length; x++) {
+                        formData.append(x + "", fileList.item(x));
+                    }
+
+                    postFiles("../controllers/testForTemplate.php",formData)
+                        .then(function (pathToImgFromServer) {
+                            self.fileImg(pathToImgFromServer);
+                            self.isTestFileSelected(true);
+                        });
+                }
+            }
+        });
+
+        self.error.subscribe(function (newVal) {
+            if(newVal!=""){
+                setTimeout(function () {
+                    self.error("");
+                },2000);
+            }
+        });
 
         self.addArea=function (newArea,mode) {
             if(mode == "hide"){
@@ -165,7 +169,30 @@
             }
         };
 
+        self.refreshFile= function () {
+            self.testFile("");
+            self.isTestFileSelected(false);
+            self.fileImg("");
+        };
+
         self.saveAreas=function () {
+            if(self.numOfQuestions()==""){
+                self.error("Попълнете броят въпроси на страницата");
+                return;
+            }
+            if(self.testName()==""){
+                self.error("Попълнете име на теста");
+                return;
+            }
+            if(!self.testFile()){
+                self.error("Не сте избрали файл");
+                return;
+            }
+            if(areasToHide().length ==0 && areasToShow().length == 0){
+                self.error("Не е нарисуван шаблон");
+                return;
+            }
+
             var data = {
                 name:self.testName(),
                 hidden:areasToHide(),
@@ -173,24 +200,9 @@
                 numOfQuestions:self.numOfQuestions()
             };
             postJSONData("../controllers/templateController.php",data)
-                // .then()
-        };
-
-        self.toTemplateCreation = function(){
-            var input = document.querySelector('input[type="file"]');
-            if(input.value) {
-                var formData = new FormData();
-                var fileList = input.files;
-                for (var x = 0; x < fileList.length; x++) {
-                    formData.append(x + "", fileList.item(x));
-                }
-
-                postFiles("../controllers/testForTemplate.php",formData)
-                    .then(function (pathToImgFromServer) {
-                        self.testFile(pathToImgFromServer);
-                        self.isTestFileSelected(true);
-                    });
-            }
+                .then(function (resonse) {
+                    self.success("Шаблона е записан.");
+                })
         };
 
         self.subscribeToShowAreas = function (handler) {
@@ -201,7 +213,7 @@
             areasToHide.subscribe(handler,null,"arrayChange");
         }
 
-        self.numOfQuestions = ko.observable("");
+
     };
 
     var testTemplateVM = new testTemplate();

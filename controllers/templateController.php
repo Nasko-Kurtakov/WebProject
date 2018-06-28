@@ -10,6 +10,14 @@ require_once "../libs/Init.php";
 Init::_init(true);
 
 use libs\Db;
+use libs\User;
+
+if (isset($_SESSION["user"]) && $_SESSION["user"]) {
+    $user = new User($_SESSION["user"]["id"],$_SESSION["user"]["names"], $_SESSION["user"]["username"], $_SESSION["user"]["usertype"]);
+}else {
+    session_destroy();
+    header("../views/login.php");
+}
 
 $postData = json_decode(file_get_contents("php://input"), true);
 //print_r($postData);
@@ -39,14 +47,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
 if($_SERVER["REQUEST_METHOD"]=="GET"){
     $params = array();
     parse_str($_SERVER['QUERY_STRING'], $params);
-    if(isset($params["id"])) {
-//        SELECT `id`,`hidden`,`visible`,`template`.`name`,`question_num` FROM `template` INNER JOIN test ON `template`.`id`=`test`.`templateId` WHERE `test`.`assigned_to` = 2
-        $stmnt = $conn->prepare("SELECT * FROM `template` WHERE id = ?");
-        $result = $stmnt->execute([$params["id"]]);
+    if($user->getUserType()!="admin") {
+        $stmnt = $conn->prepare("SELECT `id`,`template`.`name`,`question_num` FROM `template` 
+        INNER JOIN test ON `template`.`id`=`test`.`templateId`
+        WHERE `test`.`assigned_to` = ?");
+        $result = $stmnt->execute([$user->getId()]);
         $template = $stmnt->fetch();
         if(!!$template) {
-            $template["hidden"] = unserialize($template["hidden"]);
-            $template["visible"] = unserialize($template["visible"]);
             echo json_encode($template);
         }
         else{

@@ -8,8 +8,15 @@
 
 require_once "../libs/Init.php";
 Init::_init(true);
-//require_once "../libs/Db.php";
 use libs\Db;
+use libs\User;
+
+if (isset($_SESSION["user"]) && $_SESSION["user"]) {
+    $user = new User($_SESSION["user"]["id"],$_SESSION["user"]["names"], $_SESSION["user"]["username"], $_SESSION["user"]["usertype"]);
+}else {
+    session_destroy();
+    header("../views/login.php");
+}
 
 function makeDirs($dirpath, $mode=0700) {
     if(!is_dir($dirpath)){
@@ -29,21 +36,42 @@ $folderName = $templateId."_".$templateName;
 $targetDir = "../uploads/".$folderName."/";
 makeDirs($targetDir);
 
+function imageCreateFromAny($filepath) {
+    $type = exif_imagetype($filepath); // [] if you don't have exif you could use getImageSize()
+    $allowedTypes = array(
+        1,  // [] gif
+        2,  // [] jpg
+        3  // [] png
+    );
+    if (!in_array($type, $allowedTypes)) {
+        return false;
+    }
+    switch ($type) {
+        case 1 :
+            $im = imageCreateFromGif($filepath);
+            break;
+        case 2 :
+            $im = imageCreateFromJpeg($filepath);
+            break;
+        case 3 :
+            $im = imageCreateFromPng($filepath);
+            break;
+    }
+    return $im;
+}
+
+function getAreas($templateId) {
+    $conn=(new Db())->getConn();
+    $stmnt=$conn->prepare("SELECT `hidden`,`visible` FROM `template` WHERE id = ?");
+    $result = $stmnt->execute([$templateId]);
+    $areasToDraw = $stmnt->fetch();
+    return $areasToDraw;
+}
+
 foreach ($_FILES as $file){
     $targetFile = $targetDir . basename($file["name"]);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($targetFile,PATHINFO_EXTENSION));
-    // Check if image file is a actual image or fake image
-    if(isset($_POST["submit"])) {
-        $check = getimagesize($file["tmp_name"]);
-        if($check !== false) {
-            echo "File is an image - " . $check["mime"] . ".";
-            $uploadOk = 1;
-        } else {
-            echo "File is not an image.";
-            $uploadOk = 0;
-        }
-    }
     // Check if file already exists
     if (file_exists($targetFile)) {
         echo "Sorry, file already exists.";
@@ -64,6 +92,21 @@ foreach ($_FILES as $file){
             $conn = (new Db())->getConn();
             $stmnt = $conn->prepare("INSERT INTO `test`(`name`, `dirpath`, `templateId`, `assigned_to`) VALUES (?,?,?,?)");
             $stmnt->execute([$templateName,$targetFile,$templateId,$assignTo]);
+            $im=imageCreateFromAny($targetFile);
+            $areas=getAreas($templateId);
+            $areas["hidden"] = unserialize($areas["hidden"]);
+            $areas["visible"] = unserialize($areas["visible"]);
+            foreach ($areas["hidden"] as $hiddenArea){
+                $black = imagecolorallocate($im, 0, 0, 0);
+                imagefilledrectangle($im, $hiddenArea["left"], $hiddenArea["top"], $hiddenArea["left"]+$hiddenArea["width"], $hiddenArea["top"]+$hiddenArea["height"], $black);
+                imagejpeg($im,$targetFile);
+            }
+            foreach ($areas["visible"] as $visibleArea){
+                $green = imagecolorallocate($im, 0, 255, 0);
+                imagerectangle($im, $visibleArea["left"], $visibleArea["top"], $visibleArea["left"]+$visibleArea["width"], $visibleArea["top"]+$visibleArea["height"], $green);
+                imagejpeg($im,$targetFile);
+            }
+            imagedestroy($im);
         } else {
             echo "Sorry, there was an error uploading your file.";
         }

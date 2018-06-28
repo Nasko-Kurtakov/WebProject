@@ -101,6 +101,14 @@
 
             setTimeout(function () {
                 //this is not a good way to do this,sync is needed;
+
+                // var img = document.getElementById("the-img");
+                // var imgDims = {
+                //     width:img.naturalWidth,
+                //     height:img.naturalHeight
+                // };
+                // img.width = imgDims.width;
+                // img.height = imgDims.height;
                 $selectionCanvas.attr({
                     width: $(element).width(),
                     height: $(element).height()
@@ -144,6 +152,7 @@
 
         /*public*/
         self.testFile = ko.observable("");
+        self.testName = ko.observable("");
         self.isTestFileSelected = ko.observable(false);
 
 
@@ -158,7 +167,7 @@
 
         self.saveAreas=function () {
             var data = {
-                name:"testTemp",
+                name:self.testName(),
                 hidden:areasToHide(),
                 visible:areasToShow(),
                 numOfQuestions:self.numOfQuestions()

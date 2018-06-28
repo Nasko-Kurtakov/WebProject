@@ -35,12 +35,13 @@
         <span>Ctrl+drag - select to hide </span>
         <span>drag - select to show</span>
         <span><label>Брой въпроси:<input type="text" data-bind="value: $data.numOfQuestions"></label></span>
+        <span><label>Име на теста:<input type="text" data-bind="value: $data.testName"></label></span>
         <button class="save-areas" data-bind="click:$data.saveAreas">Запазване на селекцията</button>
     </div>
     <div class="controlls"></div>
     <div class="view-container">
-        <div class="test-holder" data-bind="templateSelection:$data">
-            <img class="img-holder" data-bind="attr:{'src':$data.testFile}">
+        <div class="test-holder">
+            <img id="the-img" class="img-holder" data-bind="templateSelection:$data,attr:{'src':$data.testFile}">
             <canvas class="selection-canvas" id="selection-canvas"></canvas>
             <canvas class="marking-canvas" id="marking-canvas"></canvas>
         </div>

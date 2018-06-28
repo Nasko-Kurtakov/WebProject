@@ -37,4 +37,12 @@ class User
     public function getNames(){
         return $this->names;
     }
+
+    public function getId(){
+        return $this->id;
+    }
+
+    public function getUserType(){
+        return $this->id;
+    }
 }

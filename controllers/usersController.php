@@ -9,6 +9,15 @@
 require_once "../libs/Init.php";
 Init::_init(true);
 use libs\Db;
+use libs\User;
+
+if (isset($_SESSION["user"]) && $_SESSION["user"]) {
+    $user = new User($_SESSION["user"]["id"],$_SESSION["user"]["names"], $_SESSION["user"]["username"], $_SESSION["user"]["usertype"]);
+}else {
+    session_destroy();
+    header("../views/login.php");
+}
+
 $conn = (new Db())->getConn();
 if($_SERVER["REQUEST_METHOD"]=="GET"){
     $params = array();
@@ -24,9 +33,3 @@ if($_SERVER["REQUEST_METHOD"]=="GET"){
         }
     }
 }
-
-//if($_SERVER["REQUEST_METHOD"]=="POST") {
-//    $postData = json_decode(file_get_contents("php://input"), true);
-//    $stmnt = $conn->prepare("UPDATE `test` SET `mark` = ?,`correct_answers` = ?,`comments` = ? WHERE `test_id` = ?");
-//    $stmnt->execute([$postData["mark"],$postData["correct_answers"],serialize($postData["comments"]),$postData["test_id"]]);
-//}

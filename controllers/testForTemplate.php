@@ -12,6 +12,14 @@
 
 require_once "../libs/Init.php";
 Init::_init(true);
+use libs\User;
+
+if (isset($_SESSION["user"]) && $_SESSION["user"]) {
+    $user = new User($_SESSION["user"]["id"],$_SESSION["user"]["names"], $_SESSION["user"]["username"], $_SESSION["user"]["usertype"]);
+}else {
+    session_destroy();
+    header("../views/login.php");
+}
 
 function makeDirs($dirpath, $mode=0700) {
     if(!is_dir($dirpath)){

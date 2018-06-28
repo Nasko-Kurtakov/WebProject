@@ -46,8 +46,10 @@
     function getJSONData(url,paramsObs){
         var paramsAsString = encodeData(paramsObs||{});
         var urlWithParams = url + paramsAsString;
-        return fetch(urlWithParams)
-            .then(function(response) {
+        return fetch(urlWithParams,{
+            credentials: 'same-origin',
+            method:"GET"
+        }).then(function(response) {
                 return response.json();
             })
             .then(function(myJson) {
@@ -58,6 +60,7 @@
     function postFiles (url,fileData) {
         return fetch(url, {
             method:'POST',
+            credentials: 'same-origin',
             body:fileData
         }).then(function(res) {
             return res.text();

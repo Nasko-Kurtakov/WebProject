@@ -10,25 +10,25 @@ require_once "../libs/Init.php";
 Init::_init(true);
 //require_once "../libs/Db.php";
 use libs\Db;
+use libs\User;
 use libs\MailSender;
+
+if (isset($_SESSION["user"]) && $_SESSION["user"]) {
+    $user = new User($_SESSION["user"]["id"],$_SESSION["user"]["names"], $_SESSION["user"]["username"], $_SESSION["user"]["usertype"]);
+}else {
+    session_destroy();
+    header("../views/login.php");
+}
 
 $conn = (new Db())->getConn();
 if($_SERVER["REQUEST_METHOD"]=="GET"){
     $params = array();
     parse_str($_SERVER['QUERY_STRING'], $params);
-    $stmnt=$conn->prepare("SELECT * FROM `test` WHERE templateId = ?");
-    $result = $stmnt->execute([$params["templateId"]]);
+    $stmnt=$conn->prepare("SELECT * FROM `test` WHERE templateId = ? AND `assigned_to` = ?");
+    $result = $stmnt->execute([$params["templateId"],$user["id"]]);
     $tests = $stmnt->fetchAll();
     echo json_encode($tests);
 }
-
-//function sendEmailForNewAssignedTest($user){
-//    $to = $user["email"];
-//    $subject = "[Tesify] Нов тест за оценка";
-//    $content = "Здравейте, ".$user["name"]." имате назначен тест, който трябва да оцените.\n Моля влезте в системата Testify, за да го направите.\n Поздрави,\n Tesify";
-//    $headers = "From: testify@fmi.com" . "\r\n";
-//    mail($to,$subject,$content,$headers);
-//}
 
 if($_SERVER["REQUEST_METHOD"]=="POST") {
     $postData = json_decode(file_get_contents("php://input"), true);

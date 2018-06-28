@@ -10,7 +10,6 @@ require_once "../libs/Init.php";
 Init::_init();
 
 use libs\User;
-
 if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     $teacher = new User($_SESSION["user"]["id"],$_SESSION["user"]["names"], $_SESSION["user"]["username"], $_SESSION["user"]["usertype"]);
 }
@@ -56,7 +55,6 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
         <div class="left column">
             <div class="test-holder" data-bind="testScorer:$data">
                 <img class="img-holder" data-bind="attr:{'src':$data.currentTest().dirpath }">
-                <canvas class="selection-canvas" id="selection-canvas"></canvas>
             </div>
         </div>
         <div class="right column text-center">

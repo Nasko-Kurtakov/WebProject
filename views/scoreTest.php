@@ -29,6 +29,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="../styles/shared.css" rel="stylesheet"/>
     <link href="../styles/scoreTest.css" rel="stylesheet"/>
+    <link href="../styles/uploadTests.css" rel="stylesheet"/>
     <title>Оценка на тест</title>
 </head>
 <body>
@@ -52,15 +53,25 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
 </div>
 <script type="text/html" id="templates-overview">
     <div class="all-templates-container">
-        <div class="temp-row">
-            <!--ko foreach:$data.templatesCollection-->
-            <div class="">
-                <div data-bind="text:$data.name, click:function(){
-                $parent.selectTemplate($data);
-                }"></div>
-            </div>
-            <!-- /ko-->
-        </div>
+                <div class="text-center">
+
+                    <span class="choose-test">Избери тест, който да оцениш</span>
+                    <div class="table text-center">
+                        <!--ko if:$data.templatesCollection().length == 0-->
+                        <div class="empty-template-table">*Няма направени тестове</div>
+                        <!--/ko-->
+                        <!--ko if:$data.templatesCollection().length != 0-->
+                        <!--ko foreach:$data.templatesCollection-->
+                        <div class="row template-row" data-bind="css:{'selected':($parent.selectedTemplate() && $parent.selectedTemplate().id == $data.id) },click:function(){
+                                    $parent.selectTemplate($data);
+                                }">
+                            <div class="templates-column template-name" data-bind="text:$data.name"></div>
+                            <div class="templates-column" data-bind="text:$data.date_created"></div>
+                        </div>
+                        <!--/ko-->
+                        <!--/ko-->
+                    </div>
+                </div>
     </div>
 </script>
 <script type="text/html" id="score-test-view">
@@ -115,7 +126,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     <!--/ko-->
     <!--ko if:(!!$data.currentTest()==false)-->
     <div>
-        стига толкова
+        Няма повече тестове за оценка.
     </div>
     <!--ko-->
 </script>

@@ -26,6 +26,22 @@
         self.success = ko.observable("");
         self.error = ko.observable("");
 
+        self.error.subscribe(function (newVal) {
+            if(newVal!=""){
+                setTimeout(function () {
+                    self.error("");
+                },2000);
+            }
+        });
+
+        self.success.subscribe(function (newVal) {
+            if(newVal!=""){
+                setTimeout(function () {
+                    self.success("");
+                },2000);
+            }
+        });
+
         self.onFilesSelectedEvent = function(vm,e){
           self.testFiles(e.target.files);
         };

@@ -28,16 +28,20 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     <link rel="stylesheet" href="../styles/external/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="../styles/shared.css" rel="stylesheet"/>
-    <link href="../styles/scoreTest.css" rel="stylesheet"/>
     <link href="../styles/uploadTests.css" rel="stylesheet"/>
+    <link href="../styles/scoreTest.css" rel="stylesheet"/>
     <title>Оценка на тест</title>
 </head>
 <body>
-<div class="w3-bar w3-dark-grey w3-border w3-large" >
+<div class="w3-bar w3-dark-grey w3-large" >
     <a href="<?php echo $mainPage?>" class="w3-bar-item w3-button homeButton"><i class="fa fa-home"></i></a>
-    <button class="w3-bar-item w3-button w3-mobile send-btn" data-bind="click:function(){
+    <button class="w3-bar-item w3-button w3-mobile send-btn" data-bind="visible:($data.templatesOverview.selectedTemplate() != null),click:function(){
                     $data.scoreTest();
             }">Оцени</button>
+</div>
+<div class="w3-dark-gray err-success-bar text-center">
+    <span class="w3-bar-item" data-bind="text:$data.error"></span>
+    <span class="w3-bar-item success" data-bind="text:$data.success"></span>
 </div>
 <div class="container">
     <!--ko if: $data.templatesOverview.selectedTemplate() == null-->
@@ -53,31 +57,29 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
 </div>
 <script type="text/html" id="templates-overview">
     <div class="all-templates-container">
-                <div class="text-center">
-
-                    <span class="choose-test">Избери тест, който да оцениш</span>
-                    <div class="table text-center">
-                        <!--ko if:$data.templatesCollection().length == 0-->
-                        <div class="empty-template-table">*Няма направени тестове</div>
-                        <!--/ko-->
-                        <!--ko if:$data.templatesCollection().length != 0-->
-                        <!--ko foreach:$data.templatesCollection-->
-                        <div class="row template-row" data-bind="css:{'selected':($parent.selectedTemplate() && $parent.selectedTemplate().id == $data.id) },click:function(){
-                                    $parent.selectTemplate($data);
-                                }">
-                            <div class="templates-column template-name" data-bind="text:$data.name"></div>
-                            <div class="templates-column" data-bind="text:$data.date_created"></div>
-                        </div>
-                        <!--/ko-->
-                        <!--/ko-->
-                    </div>
+        <div class="text-center">
+            <span class="choose-test">Избери тест, който да оцениш</span>
+            <div class="table text-center">
+                <!--ko if:$data.templatesCollection().length == 0-->
+                <div class="empty-template-table">*Няма направени тестове</div>
+                <!--/ko-->
+                <!--ko if:$data.templatesCollection().length != 0-->
+                <!--ko foreach:$data.templatesCollection-->
+                <div class="row template-row" data-bind="css:{'selected':($parent.selectedTemplate() && $parent.selectedTemplate().id == $data.id) },click:function(){
+                            $parent.selectTemplate($data);
+                        }">
+                    <div class="templates-column template-name" data-bind="text:$data.name"></div>
+                    <div class="templates-column" data-bind="text:$data.date_created"></div>
                 </div>
+                <!--/ko-->
+                <!--/ko-->
+            </div>
+        </div>
     </div>
 </script>
 <script type="text/html" id="score-test-view">
-    <div class="controls"></div>
     <!--ko if:!!$data.currentTest()-->
-    <div class="view-container row">
+    <div class="row">
         <div class="left column">
             <div class="test-holder" data-bind="testScorer:$data">
                 <img class="img-holder" data-bind="attr:{'src':$data.currentTest().dirpath }">
@@ -130,7 +132,6 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     </div>
     <!--ko-->
 </script>
-
 <script src="../scripts/external/jquery-3.3.1.js" type="text/javascript"></script>
 <script src="../scripts/external/knockout-3.4.2.debug.js" type="text/javascript"></script>
 <script src="../scripts/general.js" type="text/javascript"></script>

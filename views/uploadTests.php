@@ -50,7 +50,6 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     <div class="row">
         <div class="column left">
             <div class="left-container text-center">
-
                 <span>Избери шаблон, към който да прикачиш тестовете.</span>
                 <a class="create-new-template" href="createTemplate.php">Създай шаблон</a>
                 <div class="table text-center">
@@ -88,17 +87,12 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
                     <!--/ko-->
                 </div>
             </div>
-        </div>
-
     </div>
-    <div class="text-center send-btn">
-
-    </div>
-    <div class="error-msg" data-bind="text:$data.error"></div>
-    <script src="../scripts/external/jquery-3.3.1.js" type="text/javascript"></script>
-    <script src="../scripts/external/knockout-3.4.2.debug.js" type="text/javascript"></script>
-    <script src="../scripts/general.js" type="text/javascript"></script>
-    <script src="../scripts/uploadTests.js" type="text/javascript"></script>
+</div>
+<script src="../scripts/external/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="../scripts/external/knockout-3.4.2.debug.js" type="text/javascript"></script>
+<script src="../scripts/general.js" type="text/javascript"></script>
+<script src="../scripts/uploadTests.js" type="text/javascript"></script>
 </div>
 </body>
 </html>

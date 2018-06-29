@@ -40,7 +40,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     <button class="w3-bar-item w3-button w3-mobile greyButton" data-bind="visible:$data.isTestFileSelected(),click:$data.refreshFile">Избери нов файл</button>
 
 </div>
-<div class="w3-dark-gray err-success-bar">
+<div class="w3-dark-gray err-success-bar text-center">
     <span class="w3-bar-item" data-bind="text:$data.error"></span>
     <span class="w3-bar-item success" data-bind="text:$data.success"></span>
 </div>

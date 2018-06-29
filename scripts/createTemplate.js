@@ -6,7 +6,6 @@
             var selectionMode=null;
             var isDragging = false;
             var groupRect = null;
-
             var $selectionCanvas = $("#selection-canvas");
             var $markingCanvas = $("#marking-canvas");
 

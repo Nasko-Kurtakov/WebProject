@@ -39,8 +39,8 @@ class ImageManipulator
     public static function drawVisibleAreas(string $imgPath,array $areas){
         $im = ImageManipulator::imageCreateFromAny($imgPath);
         foreach ($areas as $visibleArea){
-            $green = imagecolorallocate($im, 0, 255, 0);
-            imagerectangle($im, $visibleArea["left"], $visibleArea["top"], $visibleArea["left"]+$visibleArea["width"], $visibleArea["top"]+$visibleArea["height"], $green);
+            $highlight = imagecolorallocatealpha($im, 253, 255, 50,30);
+            imagefilledrectangle($im, $visibleArea["left"], $visibleArea["top"],$visibleArea["left"]+$visibleArea["width"], $visibleArea["top"]+$visibleArea["height"], $highlight);
             imagejpeg($im,$imgPath);
         }
         imagedestroy($im);

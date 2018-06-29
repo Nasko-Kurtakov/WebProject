@@ -52,6 +52,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
                 $mailer->sendEmailForNewAssignedTest($user["name"],$user["email"]);
             }
         }
+        echo 1;
     }
     if(isset($postData["mark"])){
         $stmnt = $conn->prepare("UPDATE `test` SET `mark` = ?,`correct_answers` = ?,`comments` = ? WHERE `test_id` = ?");

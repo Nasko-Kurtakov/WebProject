@@ -43,9 +43,26 @@
         self.selectedGroup = ko.observable(null);
         self.selectedTemplate = ko.observable(null);
         self.error = ko.observable("");
+        self.success = ko.observable("");
         self.selectGroup = function (group) {
             self.selectedGroup(group);
-        }
+        };
+
+        self.error.subscribe(function (newVal) {
+            if(newVal!=""){
+                setTimeout(function () {
+                    self.error("");
+                },2000);
+            }
+        });
+
+        self.success.subscribe(function (newVal) {
+            if(newVal!=""){
+                setTimeout(function () {
+                    self.success("");
+                },2000);
+            }
+        });
 
         self.selectTemplate = function (template) {
             self.selectedTemplate(template);
@@ -66,6 +83,9 @@
                 return user["user_id"];
             });
             postJSONData("../controllers/testController.php",{users:userIds,templateId:self.selectedTemplate().id})
+                .then(function (response) {
+                    self.success("Назначаването успешно. Изпратени са имейли.");
+                })
         }
     };
 

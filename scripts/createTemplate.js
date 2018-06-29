@@ -159,6 +159,14 @@
             }
         });
 
+        self.success.subscribe(function (newVal) {
+            if(newVal!=""){
+                setTimeout(function () {
+                    self.success("");
+                },2000);
+            }
+        });
+
         self.addArea=function (newArea,mode) {
             if(mode == "hide"){
                 areasToHide.push(newArea);

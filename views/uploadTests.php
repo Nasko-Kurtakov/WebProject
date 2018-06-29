@@ -45,7 +45,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
         <div class="column left">
             <div class="left-container text-center">
 
-                <span>Избери тестови шаблон към който да прикачиш тестовете.</span>
+                <span>Избери шаблон, към който да прикачиш тестовете.</span>
                 <a class="create-new-template" href="createTemplate.php">Създай шаблон</a>
                 <div class="table text-center">
                     <!--ko if:$data.templatesList().length == 0-->
@@ -71,7 +71,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
                            mozdirectory="" data-bind="event:{ change: onFilesSelectedEvent }" />
                     <label for="files">Избери тестове</label>
                 </form>
-                <span data-bind="text:$data.testFiles() ? $data.testFiles().length + ' файла са избрани' : 'Не са избрани файлове'"></span>
+                <span data-bind="text:$data.testFiles() ? $data.testFiles().length + ' файла са избрани' : '*Не са избрани файлове'"></span>
                 <div class="table text-center">
                     <!--ko if:$data.templatesList().length != 0-->
                     <!--ko foreach:$data.testFiles-->

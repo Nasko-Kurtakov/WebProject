@@ -1,3 +1,4 @@
+
 .column{
     float: left;
     margin: 100px auto;
@@ -22,21 +23,22 @@
 }
 
 .selected{
-    background-color: #0d6993;
-    border: 1px solid #0d6993;
+    background-color: #57b277;
+    border: 1px solid #57b277;
     border-radius: 4px;
 }
 .template-row:hover{
-    background-color: #0d6993;
-    border: 1px solid #0d6993;
+    background-color: #57b277;
+    border: 1px solid  #57b277;
     border-radius: 4px;
     cursor:pointer;
 }
 
 .file-row{
-    background-color: #8ac747;
+    background-color: #57b277;
     border: 1px solid #8ac747;
     border-radius: 4px;
+    margin: 5px;
 }
 
 .table{
@@ -50,7 +52,7 @@
 
 .send-btn {
     float: right !important;
-    background-color: #2e8a52;
+    background-color: #019d6e;
 }
 
 form[id="pickFiles"]{
@@ -60,11 +62,15 @@ form[id="pickFiles"]{
 .create-new-template{
     display: inline-block;
     font-size: 1.25em;
-    background: #019d6e;
+    background: #94335c;
     padding: 10px;
     text-align: center;
     border-radius: 5px;
     color: white;
     font-weight: bold;
     text-decoration: none;
+}
+
+.create-new-template:hover{
+    background-color: rgba(148, 51, 92, 0.77);
 }

@@ -31,7 +31,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     <title>Създаване на шаблон</title>
 </head>
 <body>
-<div class="w3-bar w3-dark-grey w3-border w3-large" >
+<div class="w3-bar w3-dark-grey w3-large" >
     <a href="<?php echo $mainPage?>" class="w3-bar-item w3-button homeButton"><i class="fa fa-home"></i></a>
     <button class="w3-bar-item w3-button w3-mobile greenButton rightAlign " data-bind="click:$data.saveAreas">Запазване</button>
     <input type="text" class="w3-bar-item w3-input w3-white w3-mobile rightAlign" data-bind="value: $data.numOfQuestions" placeholder="Брой въпроси">
@@ -40,12 +40,12 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     <button class="w3-bar-item w3-button w3-mobile greyButton" data-bind="visible:$data.isTestFileSelected(),click:$data.refreshFile">Избери нов файл</button>
 
 </div>
-<div class="w3-dark-gray error">
+<div class="w3-dark-gray err-success-bar">
     <span class="w3-bar-item" data-bind="text:$data.error"></span>
     <span class="w3-bar-item success" data-bind="text:$data.success"></span>
 </div>
 <div data-bind="visible:$data.isTestFileSelected()">
-    <div class="notes">Бележки:
+    <div class="notes">
         <span class="notes"><img src="../img/dragIcon48.png">Shift+drag - select to hide </span>
         <span class="notes"><img src="../img/dragIcon48.png">drag - select to show</span>
     </div>

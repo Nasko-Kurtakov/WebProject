@@ -38,7 +38,7 @@ body{
     font-size: 1.25em;
     font-weight: 700;
     color: white;
-    background-color: #019d6e;
+    background-color: #94335c;
     display: inline-block;
     cursor: pointer; /* "hand" cursor */
     padding: 10px;
@@ -47,7 +47,7 @@ body{
 
 .inputfile:focus + label,
 .inputfile + label:hover {
-    background-color: #06bc85;
+    background-color: rgba(148, 51, 92, 0.77);
 }
 
 .inputfile:focus + label {
@@ -69,4 +69,8 @@ body{
 
 .greyButton{
     background-color: #939393;
+}
+
+.err-success-bar{
+    margin-top:43px;
 }

@@ -33,7 +33,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
 <div class="view-container">
     <div class="header">Добре дошъл <span style="color:white"> <?php echo $user->getNames(); ?></span></div>
     <div class="row">
-        <div class="columnStudent thirdColumn">
+        <div class="columnStudent secondColumn">
             <a href="scoreTest.php">
                 <span class="columnName">Оцени</span>
                 <img src="../img/evaluate.png">

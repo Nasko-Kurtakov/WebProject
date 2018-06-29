@@ -31,7 +31,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     <title>Качи тестове</title>
 </head>
 <body>
-<div class="w3-bar w3-dark-grey w3-border w3-large" >
+<div class="w3-bar w3-dark-grey w3-large">
     <a href="<?php echo $mainPage?>" class="w3-bar-item w3-button homeButton"><i class="fa fa-home"></i></a>
     <button class="w3-bar-item w3-button w3-mobile send-btn" data-bind="click:function(){
                     $data.sendTests();
@@ -39,8 +39,14 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     <span class="w3-bar-item" data-bind=""></span>
     <span class="w3-bar-item success" data-bind=""></span>
 </div>
+<div class="w3-dark-gray err-success-bar text-center">
+    <span class="w3-bar-item" data-bind="text:$data.error"></span>
+    <span class="w3-bar-item success" data-bind="text:$data.success"></span>
+</div>
 <div class="container">
-    ERROR AND SUCCESS
+    <div class="text-center choose-test">
+        Прикачете тестове за оценка по шаблон
+    </div>
     <div class="row">
         <div class="column left">
             <div class="left-container text-center">

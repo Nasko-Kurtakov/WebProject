@@ -1,7 +1,6 @@
 
 .column{
     float: left;
-    margin: 100px auto;
     padding: 100px;
 }
 .left{
@@ -15,7 +14,7 @@
 .row{
     display: flex;
     /*width: 100%;*/
-    margin: 20px 10px;
+    margin: 10px 5px;
 }
 
 .templates-column{

@@ -25,7 +25,7 @@ if($_SERVER["REQUEST_METHOD"]=="GET"){
     $params = array();
     parse_str($_SERVER['QUERY_STRING'], $params);
     $stmnt=$conn->prepare("SELECT * FROM `test` WHERE templateId = ? AND `assigned_to` = ?");
-    $result = $stmnt->execute([$params["templateId"],$user["id"]]);
+    $result = $stmnt->execute([$params["templateId"],$user->getId()]);
     $tests = $stmnt->fetchAll();
     echo json_encode($tests);
 }

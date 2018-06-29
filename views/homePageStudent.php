@@ -24,15 +24,16 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../styles/shared.css" rel="stylesheet"/>
     <link href="../styles/homePageTeacher.css" rel="stylesheet"/>
-    <link href="../styles/homePageTeacher.css" rel="stylesheet"/>
-    <title>Добре дошъл <?php echo $teacher->getNames(); ?></title>
+    <link href="../styles/homePageStudent.css" rel="stylesheet"/>
+    <title>Добре дошъл <?php echo $user->getNames(); ?></title>
 </head>
 <body>
 <div class="view-container">
-    <div class="welcome">Добре дошъл <span style="color:white"> <?php echo $teacher->getNames(); ?></span></div>
+    <div class="header">Добре дошъл <span style="color:white"> <?php echo $user->getNames(); ?></span></div>
     <div class="row">
-        <div class="column thirdColumn">
+        <div class="columnStudent secondColumn">
             <a href="scoreTest.php">
                 <span class="columnName">Оцени</span>
                 <img src="../img/evaluate.png">

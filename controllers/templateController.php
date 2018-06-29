@@ -48,11 +48,11 @@ if($_SERVER["REQUEST_METHOD"]=="GET"){
     $params = array();
     parse_str($_SERVER['QUERY_STRING'], $params);
     if($user->getUserType()!="admin") {
-        $stmnt = $conn->prepare("SELECT `id`,`template`.`name`,`question_num` FROM `template` 
+        $stmnt = $conn->prepare("SELECT `id`,`template`.`name`,`question_num`,`date_created` FROM `template`
         INNER JOIN test ON `template`.`id`=`test`.`templateId`
         WHERE `test`.`assigned_to` = ?");
         $result = $stmnt->execute([$user->getId()]);
-        $template = $stmnt->fetch();
+        $template = $stmnt->fetchAll();
         if(!!$template) {
             echo json_encode($template);
         }

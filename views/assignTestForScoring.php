@@ -37,13 +37,13 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     <button class="w3-bar-item w3-button w3-mobile assign-btn" data-bind="click:$data.assign">Назначи</button>
 </div>
 <div class="container">
-    <div>
-        Изберете тест и групата ученици, които да го оценяват.
+    <div class="text-center choose-test">
+        Изберете тест и група, която да оценява.
     </div>
     <div class="row">
         <div class="column left">
             <div class="left-container">
-                <span>Избери група студенти</span>
+                <span class="table-header">Избери група студенти</span>
                 <!--ko if:$data.groups.length == 0-->
                 <div class="empty-template-table">Няма записани групи</div>
                 <!--/ko-->
@@ -60,7 +60,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
         </div>
         <div class="column right">
             <div class="right-container">
-                <span>Избери тест, който да бъде оценяван от студентите</span>
+                <span class="table-header">Избери тест, който да бъде оценяван от студентите</span>
                 <!--ko if:$data.templates.length == 0-->
                 <div class="empty-template-table">Няма записани тестове</div>
                 <!--/ko-->

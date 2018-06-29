@@ -40,7 +40,9 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     <span class="w3-bar-item success" data-bind=""></span>
 </div>
 <div class="container">
-    ERROR AND SUCCESS
+    <div class="text-center choose-test">
+        Прикачете тестове за оценка по шаблон
+    </div>
     <div class="row">
         <div class="column left">
             <div class="left-container text-center">

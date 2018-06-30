@@ -46,8 +46,8 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
 </div>
 <div class="hide-on-print" data-bind="visible:$data.isTestFileSelected()">
     <div class="notes">
-        <span class="notes"><img src="../img/dragIcon48.png">Shift+drag - select to hide </span>
-        <span class="notes"><img src="../img/dragIcon48.png">drag - select to show</span>
+        <span class="notes"><img src="../img/dragIcon48.png">Shift+drag - поле за скриване </span>
+        <span class="notes"><img src="../img/dragIcon48.png">Drag - поле за подчертаване</span>
     </div>
 </div>
 <div class="main-content-holder">

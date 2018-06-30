@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.1
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 28, 2018 at 06:06 PM
--- Server version: 5.6.25-enterprise-commercial-advanced-log
--- PHP Version: 7.2.6
+-- Generation Time: Jun 30, 2018 at 05:10 PM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `testify`
 --
+CREATE DATABASE IF NOT EXISTS `testify` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `testify`;
 
 -- --------------------------------------------------------
 
@@ -42,8 +44,7 @@ CREATE TABLE `template` (
 --
 
 INSERT INTO `template` (`id`, `hidden`, `visible`, `name`, `question_num`, `date_created`) VALUES
-(17, 'a:4:{i:0;a:4:{s:3:\"top\";i:93;s:4:\"left\";i:214;s:5:\"width\";i:72;s:6:\"height\";i:107;}i:1;a:4:{s:3:\"top\";i:84;s:4:\"left\";i:293;s:5:\"width\";i:50;s:6:\"height\";i:118;}i:2;a:4:{s:3:\"top\";i:79;s:4:\"left\";i:353;s:5:\"width\";i:65;s:6:\"height\";i:130;}i:3;a:4:{s:3:\"top\";i:106;s:4:\"left\";i:668;s:5:\"width\";i:142;s:6:\"height\";i:147;}}', 'a:3:{i:0;a:4:{s:3:\"top\";i:81;s:4:\"left\";i:98;s:5:\"width\";i:109;s:6:\"height\";i:125;}i:1;a:4:{s:3:\"top\";i:80;s:4:\"left\";i:444;s:5:\"width\";i:45;s:6:\"height\";i:108;}i:2;a:4:{s:3:\"top\";i:85;s:4:\"left\";i:544;s:5:\"width\";i:83;s:6:\"height\";i:135;}}', 'rather test 2', 22, '2018-06-28 14:59:25'),
-(20, 'a:1:{i:0;a:4:{s:3:\"top\";i:475;s:4:\"left\";i:327;s:5:\"width\";i:1144;s:6:\"height\";i:216;}}', 'a:1:{i:0;a:4:{s:3:\"top\";i:168;s:4:\"left\";i:178;s:5:\"width\";i:1374;s:6:\"height\";i:222;}}', 'testTemp', 7, '2018-06-28 12:17:19');
+(23, 'a:1:{i:0;a:4:{s:3:\"top\";i:83;s:4:\"left\";i:87;s:5:\"width\";i:783;s:6:\"height\";i:143;}}', 'a:7:{i:0;a:4:{s:3:\"top\";i:292;s:4:\"left\";i:95;s:5:\"width\";i:741;s:6:\"height\";i:45;}i:1;a:4:{s:3:\"top\";i:430;s:4:\"left\";i:131;s:5:\"width\";i:450;s:6:\"height\";i:39;}i:2;a:4:{s:3:\"top\";i:516;s:4:\"left\";i:91;s:5:\"width\";i:521;s:6:\"height\";i:46;}i:3;a:4:{s:3:\"top\";i:637;s:4:\"left\";i:124;s:5:\"width\";i:145;s:6:\"height\";i:27;}i:4;a:4:{s:3:\"top\";i:709;s:4:\"left\";i:85;s:5:\"width\";i:805;s:6:\"height\";i:227;}i:5;a:4:{s:3:\"top\";i:952;s:4:\"left\";i:86;s:5:\"width\";i:772;s:6:\"height\";i:93;}i:6;a:4:{s:3:\"top\";i:1295;s:4:\"left\";i:136;s:5:\"width\";i:366;s:6:\"height\";i:39;}}', 'Botev', 4, '2018-06-30 13:28:59');
 
 -- --------------------------------------------------------
 
@@ -67,22 +68,9 @@ CREATE TABLE `test` (
 --
 
 INSERT INTO `test` (`test_id`, `name`, `dirpath`, `templateId`, `correct_answers`, `comments`, `mark`, `assigned_to`) VALUES
-(15, 'testTemp', '../uploads/20_testTemp/test1.jpg', 20, NULL, NULL, NULL, 1),
-(16, 'testTemp', '../uploads/20_testTemp/test2.jpg', 20, NULL, NULL, NULL, 2),
-(17, 'testTemp', '../uploads/20_testTemp/test3.jpg', 19, NULL, NULL, NULL, 4),
-(18, 'rather test 2', '../uploads/17_rather test 2/test1.jpg', 17, NULL, NULL, NULL, 1),
-(19, 'rather test 2', '../uploads/17_rather test 2/test2.jpg', 17, NULL, NULL, NULL, 1),
-(20, 'rather test 2', '../uploads/17_rather test 2/test3.jpg', 17, NULL, NULL, NULL, 1),
-(21, 'rather test 2', '../uploads/17_rather test 2/test1.jpg', 17, NULL, NULL, NULL, 1),
-(22, 'rather test 2', '../uploads/17_rather test 2/test1.jpg', 17, NULL, NULL, NULL, 1),
-(23, 'rather test 2', '../uploads/17_rather test 2/test2.jpg', 17, NULL, NULL, NULL, 1),
-(24, 'rather test 2', '../uploads/17_rather test 2/test3.jpg', 17, NULL, NULL, NULL, 1),
-(25, 'rather test 2', '../uploads/17_rather test 2/test1.jpg', 17, NULL, NULL, NULL, 1),
-(26, 'rather test 2', '../uploads/17_rather test 2/test2.jpg', 17, NULL, NULL, NULL, 1),
-(27, 'rather test 2', '../uploads/17_rather test 2/test3.jpg', 17, NULL, NULL, NULL, 1),
-(28, 'rather test 2', '../uploads/17_rather test 2/test1.jpg', 17, NULL, NULL, NULL, 1),
-(29, 'rather test 2', '../uploads/17_rather test 2/test2.jpg', 17, NULL, NULL, NULL, 1),
-(30, 'rather test 2', '../uploads/17_rather test 2/test3.jpg', 17, NULL, NULL, NULL, 1);
+(69, 'Botev', '../uploads/23_Botev/test1 2.jpg', 23, NULL, NULL, NULL, 1),
+(70, 'Botev', '../uploads/23_Botev/test1 3.jpg', 23, NULL, NULL, NULL, 1),
+(71, 'Botev', '../uploads/23_Botev/test1.jpg', 23, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -105,11 +93,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `name`, `username`, `password`, `user_type`, `user_group`, `email`) VALUES
-(1, 'Atanas Kurtakov', 'nasko', 'asdf', 'admin', 'admin', 'nasko.kurtakov@gmail.com'),
-(2, 'Ivan Ivanov', 'ivan', 'asdf', 'student', 'SI_2015', 'nasko.kurtakov@gmail.com'),
-(4, 'Atanas Kurtakov', 'petur', 'asdf', 'student', 'SI_2015', 'nasko.kurtakov@gmail.com'),
-(5, 'Stamat Georgiev', 'stamat', 'asdf', 'student', 'KN_2015', 'nasko.kurtakov@gmail.com'),
-(6, 'test', 'test', 'test', 'student', NULL, 'nasko.kurtakov@gmail.com');
+(1, 'Милен Петров', 'admin', 'admin', 'admin', 'admin', 'nasko.kurtakov@gmail.com'),
+(2, 'Иван Иванов', 'student', 'student', 'student', 'SI_2015', 'nasko.kurtakov@gmail.com'),
+(4, 'Георги Георгиев', 'georgi', 'georgi', 'student', 'SI_2015', 'nasko.kurtakov@gmail.com'),
+(5, 'Стамат Петров', 'stamat', 'stamat', 'student', 'KN_2015', 'nasko.kurtakov@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -125,7 +112,9 @@ ALTER TABLE `template`
 -- Indexes for table `test`
 --
 ALTER TABLE `test`
-  ADD PRIMARY KEY (`test_id`);
+  ADD PRIMARY KEY (`test_id`),
+  ADD KEY `foreign key-template` (`templateId`) USING BTREE,
+  ADD KEY `foreign key-user` (`assigned_to`) USING BTREE;
 
 --
 -- Indexes for table `user`
@@ -142,19 +131,30 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `template`
 --
 ALTER TABLE `template`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `test`
 --
 ALTER TABLE `test`
-  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `test`
+--
+ALTER TABLE `test`
+  ADD CONSTRAINT `test_ibfk_1` FOREIGN KEY (`templateId`) REFERENCES `template` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `test_ibfk_2` FOREIGN KEY (`assigned_to`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

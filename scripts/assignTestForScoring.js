@@ -60,7 +60,7 @@
             if(newVal!=""){
                 setTimeout(function () {
                     self.success("");
-                },2000);
+                },5000);
             }
         });
 

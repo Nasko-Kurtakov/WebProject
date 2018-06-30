@@ -8,7 +8,8 @@ Init::_init();
         <meta charset="utf-8" />
         <title>Влизане</title>
     <script src="../scripts/main.js" type="text/javascript"></script>
-    <link href="../styles/style.css" rel="stylesheet" />
+        <link href="../styles/shared.css" rel="stylesheet" />
+        <link href="../styles/style.css" rel="stylesheet" />
     </head>
     <body>
     <div class="login-page">

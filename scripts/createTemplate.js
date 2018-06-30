@@ -165,7 +165,7 @@
             if(newVal!=""){
                 setTimeout(function () {
                     self.error("");
-                },2000);
+                },5000);
             }
         });
 
@@ -173,7 +173,7 @@
             if(newVal!=""){
                 setTimeout(function () {
                     self.success("");
-                },2000);
+                },5000);
             }
         });
 

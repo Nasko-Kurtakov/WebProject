@@ -13,6 +13,7 @@
 <head>
     <meta charset="utf-8"/>
     <title>Създаване на тест</title>
+    <link href="../styles/shared.css" rel="stylesheet"/>
     <link href="../styles/createTest.css" rel="stylesheet"/>
 </head>
 <body>

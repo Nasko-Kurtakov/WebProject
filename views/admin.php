@@ -11,6 +11,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../styles/shared.css" rel="stylesheet"/>
     <link href="../styles/homePageTeacher.css" rel="stylesheet" />
 </head>
 <body>

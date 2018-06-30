@@ -120,7 +120,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     <!--/ko-->
     <!--ko if:(!!$data.currentTest()==false)-->
     <div>
-        Няма повече тестове за оценка.
+        <img class="meme" src="../img/Yes-We-made-it-to-the-end.jpg">
     </div>
     <!--ko-->
 </script>

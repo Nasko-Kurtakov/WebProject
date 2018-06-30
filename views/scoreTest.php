@@ -36,8 +36,8 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
 <div class="w3-bar w3-dark-grey w3-large" >
     <a href="<?php echo $mainPage?>" class="w3-bar-item w3-button homeButton"><i class="fa fa-home"></i></a>
     <button class="w3-bar-item w3-button w3-mobile send-btn" data-bind="visible:($data.templatesOverview.selectedTemplate() != null),click:function(){
-                    $data.scoreTest();
-            }">Оцени</button>
+            $data.scoreTestView().scoreTest();
+        }">Оцени</button>
 </div>
 <div class="w3-dark-gray err-success-bar text-center">
     <span class="w3-bar-item" data-bind="text:$data.error"></span>
@@ -86,43 +86,35 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
             </div>
         </div>
         <div class="right column text-center">
-            <div class="column left-first">
-                <div>№</div>
-                <!--ko foreach:answers-->
-                <div data-bind="text:$index()+1">
-
+            <div class="row">
+                <div class="column left-first">
+                    <div>№</div>
                 </div>
-                <!--/ko-->
+                <div class="column left-three">
+                    <div>Верен</div>
+                </div>
+                <div class="column middle-three">
+                    <div>Грешен</div>
+                </div>
             </div>
-            <div class="column left-three">
-                <div>Верен</div>
-                <!--ko foreach:answers-->
-                <div>
+            <!--ko foreach:answers-->
+            <div class="row">
+                <div class="column left-first" data-bind="text:$index()">
+                </div>
+                <div class="column left-three">
                     <input type="radio" value="true" data-bind="checked: $data.isCorrect,attr:{'name':$index()}" />
                 </div>
-                <!--/ko-->
-            </div>
-            <div class="column middle-three">
-                <div>Грешен</div>
-                <!--ko foreach:answers-->
-                <div>
+                <div class="column middle-three">
                     <input type="radio" value="false" data-bind="checked: $data.isCorrect,attr:{'name':$index()}" />
                 </div>
-                <!--/ko-->
             </div>
-            <div class="column right-three">
-                <div>Коментар</div>
-                <!--ko foreach:answers-->
-                <textarea data-bind="textInput:$data.comment"></textarea>
-                <!--/ko-->
+            <!--/ko-->
+            <div class="row column text-center">Коментар</div>
+            <textarea class="row" data-bind="textInput:$data.comment"></textarea>
+            <div class="row">
+                <div class="column column-30">Оценка:</div>
+                <div class="column column-70"><input class="mark" type="text" data-bind="value:$data.mark"></div>
             </div>
-            <div style="width: 50%" class="column">
-                <input type="text" data-bind="value:$data.mark">
-            </div>
-            <div style="width: 50%" class="column">
-                <button data-bind="click:$data.scoreTest">Оцени</button>
-            </div>
-
         </div>
     </div>
     <!--/ko-->

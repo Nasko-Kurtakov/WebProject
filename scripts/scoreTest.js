@@ -12,6 +12,7 @@
         self.testCreated = ko.observable(false);
         self.currentTest = ko.observable(null);
         self.mark = ko.observable("");
+        self.comment = ko.observable();
         // self.areasToShow = ko.observableArray(template.visible);
         // self.areasToHide = ko.observableArray(template.hidden);
         var testsToScore = [];
@@ -30,10 +31,11 @@
             var answers = [];
             for(var i=0;i<self.numOfQuestions;i++){
                 answers.push({
-                    isCorrect:ko.observable(false),
-                    comment:ko.observable("")
+                    isCorrect:ko.observable(false)
+                    // comment:ko.observable("")
                 });
             }
+            self.comment("");
             self.answers(answers);
             self.mark("");
         };
@@ -52,14 +54,14 @@
                 return current.isCorrect()==="true" ? prev+1:prev;
             },0);
 
-            var comments = self.answers().map(function (answer) {
-                return answer.comment();
-            });
+            // var comments = self.answers().map(function (answer) {
+            //     return answer.comment();
+            // });
 
             postJSONData("../controllers/testController.php",{
                 test_id:this.currentTest().test_id,
                 correct_answers:(correctAnswers+"/"+self.numOfQuestions),
-                comments:comments,
+                comments:self.comment(),
                 mark:this.mark()
             }).then(function () {
                 nextTest();

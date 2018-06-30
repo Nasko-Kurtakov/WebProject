@@ -131,6 +131,7 @@
         self.numOfQuestions = ko.observable("");
         self.error = ko.observable("");
         self.success = ko.observable("");
+        self.isPrinting = ko.observable(false);
 
         self.testFile.subscribe(function (newValue) {
             if(!!newValue){
@@ -150,6 +151,15 @@
                 }
             }
         });
+
+        self.print=function () {
+            self.isPrinting(true);
+            var oldTitle = document.title;
+            document.title = "Тест";
+            window.print();
+            document.title = oldTitle;
+            self.isPrinting(false);
+        };
 
         self.error.subscribe(function (newVal) {
             if(newVal!=""){

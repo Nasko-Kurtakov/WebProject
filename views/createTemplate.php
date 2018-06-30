@@ -30,21 +30,21 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
     <link href="../styles/createTemplate.css" rel="stylesheet"/>
     <title>Създаване на шаблон</title>
 </head>
-<body>
-<div class="w3-bar w3-dark-grey w3-large" >
+<body data-bind="css: { 'is-printing': $data.isPrinting}">
+<div class="w3-bar w3-dark-grey w3-large hide-on-print" >
     <a href="<?php echo $mainPage?>" class="w3-bar-item w3-button homeButton"><i class="fa fa-home"></i></a>
     <button class="w3-bar-item w3-button w3-mobile greenButton rightAlign " data-bind="click:$data.saveAreas">Запазване</button>
     <input type="text" class="w3-bar-item w3-input w3-white w3-mobile rightAlign" data-bind="value: $data.numOfQuestions" placeholder="Брой въпроси">
     <input type="text" class="w3-bar-item w3-input w3-white w3-mobile rightAlign" data-bind="value: $data.testName" placeholder="Име на теста">
 
     <button class="w3-bar-item w3-button w3-mobile greyButton" data-bind="visible:$data.isTestFileSelected(),click:$data.refreshFile">Избери нов файл</button>
-
+    <button class="w3-bar-item w3-button w3-mobile greenButton" data-bind="visible:($data.isTestFileSelected()==true), click:$data.print">Принтирай</button>
 </div>
-<div class="w3-dark-gray err-success-bar text-center">
+<div class="w3-dark-gray err-success-bar text-center hide-on-print">
     <span class="w3-bar-item" data-bind="text:$data.error"></span>
     <span class="w3-bar-item success" data-bind="text:$data.success"></span>
 </div>
-<div data-bind="visible:$data.isTestFileSelected()">
+<div class="hide-on-print" data-bind="visible:$data.isTestFileSelected()">
     <div class="notes">
         <span class="notes"><img src="../img/dragIcon48.png">Shift+drag - select to hide </span>
         <span class="notes"><img src="../img/dragIcon48.png">drag - select to show</span>
@@ -52,7 +52,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
 </div>
 <div class="main-content-holder">
 <!--ko if:!$data.isTestFileSelected()-->
-<div class="file-picker-container">
+<div class="file-picker-container hide-on-print">
     <div class="caption-text">Преди да продължите изберете тестови файл. Той ще се използва само за създаването на шаблон и няма да бъде записван.</div>
     <form id="pickFile">
         <input type="file" name="file" id="file" class="inputfile" data-bind="value:$data.testFile" />

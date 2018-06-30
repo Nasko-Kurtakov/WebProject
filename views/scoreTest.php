@@ -99,7 +99,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"]) {
             </div>
             <!--ko foreach:answers-->
             <div class="row">
-                <div class="column left-first" data-bind="text:$index()">
+                <div class="column left-first" data-bind="text:($index()+1)">
                 </div>
                 <div class="column left-three">
                     <input type="radio" value="true" data-bind="checked: $data.isCorrect,attr:{'name':$index()}" />

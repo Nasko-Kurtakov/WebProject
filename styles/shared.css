@@ -78,3 +78,8 @@ body{
 .choose-test{
     font-size: 50px;
 }
+
+.is-printing .hide-on-print{
+    display: none;
+    /*visibility: hidden;*/
+}
